@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 const api = process.env.REACT_APP_READABLE_API || "https://localhost:3001";
 
 let token = localStorage.token;
@@ -12,6 +14,34 @@ const headers = {
     Authorization: token,
     "Content-Type": "application/json"
 };
+
+
+// This commands loads the mocked request.js as defined in __mocks__/request.js
+jest.mock('../request')
+
+const github = require('../github')
+
+// A simple example test
+describe('#getUser() using Promises', () => {
+  it('should load user data', () => {
+    return github.getUser('vnglst')
+    .then(data => {
+      expect(data).toBeDefined()
+      expect(data.entity.name).toEqual('Koen van Gilst')
+    })
+  })
+})
+
+// The exact same test using async/await
+describe('#getUser() using async/await', () => {
+  it('should load user data', async () => {
+    const data = await github.getUser('vnglst')
+    expect(data).toBeDefined()
+    expect(data.entity.name).toEqual('Koen van Gilst')
+  })
+})
+
+
 
 export const getPosts = () =>
     fetch('posts', { headers }).then(res => res.json());
