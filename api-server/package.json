@@ -13,9 +13,28 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.1",
+    "clone": "^2.1.1",
     "cors": "^2.8.3",
     "dotenv": "^4.0.0",
-    "express": "^4.15.2",
-    "clone": "^2.1.1"
-  }
- }
+    "express": "^4.15.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "jest": "^21.2.1",
+    "jest-cli": "^21.2.1",
+    "react-scripts": "^1.0.17",
+    "superagent": "^3.8.1",
+    "supertest": "^3.0.0"
+  },
+  "scripts": {
+    "test": "react-scripts test --env=jsdom"
+  },
+  "standard": {
+    "globals": [
+      "fetch",
+      "localStorage",
+      "it"
+    ]
+  }  
+}
