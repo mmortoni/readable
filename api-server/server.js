@@ -125,7 +125,6 @@ app.use((req, res, next) => {
   }
 })
 
-
 app.get('/categories', (req, res) => {
     categories.getAll(req.token)
       .then(

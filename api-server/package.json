@@ -16,7 +16,8 @@
     "clone": "^2.1.1",
     "cors": "^2.8.3",
     "dotenv": "^4.0.0",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "node-time-uuid": "^0.1.5"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -29,12 +30,5 @@
   },
   "scripts": {
     "test": "react-scripts test --env=jsdom"
-  },
-  "standard": {
-    "globals": [
-      "fetch",
-      "localStorage",
-      "it"
-    ]
-  }  
+  }
 }

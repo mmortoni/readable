@@ -1,5 +1,5 @@
 const clone = require('clone')
-
+// http://facebook.github.io/jest/pt-BR/
 let db = {}
 
 const defaultData = {
@@ -22,6 +22,17 @@ const defaultData = {
     author: 'thingone',
     category: 'redux',
     voteScore: -5,
+    deleted: false,
+    commentCount: 0
+  },
+  "8xf0y6ziyjabvozdd253nds": {
+    id: '8xf0y6ziyjabvozdd253nds',
+    timestamp: 1467166872634,
+    title: 'Udacity - Cursos de Tecnologia‎',
+    body: 'Udacity é uma organização educacional com fins lucrativos fundada por Sebastian Thrun, David Stavens, e Mike Sokolsk',
+    author: 'Wikipédia',
+    category: 'udacity',
+    voteScore: 16,
     deleted: false,
     commentCount: 0
   }
