@@ -1,7 +1,7 @@
 const supertest = require('supertest');
 var objectId = require("node-time-uuid");
 
-const app = require('../../server');
+const app = require('../../app');
 const readableAPI = supertest.agent(app);
 
 const token = Math.random()
@@ -24,12 +24,13 @@ describe('Testes Udacity Readable API', () => {
             .expect('Content-Type', 'text/html; charset=utf-8')
             .expect(200)
             .end((err, res) => {
+                //console.log(res)
                 if (err) return done(err);
                 done();
             });
     });
   
-    it('GET /categories      ==> Array de objeto', done => {
+    it('GET /categories      ==> Obter todas as categorias disponíveis para o aplicativo.', done => {
         readableAPI
         .get('/categories')
         .set(headers)
@@ -41,22 +42,21 @@ describe('Testes Udacity Readable API', () => {
         })
     });
 
-    it('GET /:category/posts ==> Obter todas as postagens para uma categoria específica', done => {
+    it('GET /:category/posts ==> Obter todas as postagens para uma categoria específica.', done => {
         categorias.forEach((categoria) => {
             readableAPI
-            .get(`/:${categoria.name}/posts`)
+            .get(`/${categoria.name}/posts`)
             .set(headers)
             .expect('Content-Type', 'application/json; charset=utf-8')
             .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
-                console.log('Categoria: ', categoria.name);
                 done();
             });
         });        
     });
 
-    it('GET /posts           ==> Array de objeto', done => {
+    it('GET /posts           ==> Obter todas as postagens.', done => {
         readableAPI
         .get('/posts')
         .set(headers)
@@ -83,9 +83,7 @@ describe('Testes Udacity Readable API', () => {
         commentCount: 0
     }; 
 
-    console.log(post);
-
-    it('POST /posts           ==> Adicionar uma nova postagem', done => {
+    it('POST /posts          ==> Adicionar uma nova postagem', done => {
         readableAPI
         .post('/posts')
         .set(headers)
@@ -98,7 +96,7 @@ describe('Testes Udacity Readable API', () => {
         })
     });
 
-    it('GET /posts/:id        ==> Obter os detalhes de uma única postagem', done => {
+    it('GET /posts/:id       ==> Obter os detalhes de uma única postagem', done => {
         readableAPI
         .get('/posts/8xf0y6ziyjabvozdd253nds')
         .set(headers)
@@ -108,4 +106,17 @@ describe('Testes Udacity Readable API', () => {
             done();
         })
     });
+
+    it('POST /posts/:id      ==> Votar em uma postagem', done => {
+        readableAPI
+        .post('/posts/6ni6ok3ym7mf1p33lnez')
+        .send({option: 'upVote'})
+        .set(headers)
+        .expect(200)
+        .then(res => {
+            expect(res.body.id).toEqual('6ni6ok3ym7mf1p33lnez');
+            done();
+        })
+    });
+
 });
