@@ -1,8 +1,8 @@
 const supertest = require('supertest');
 var objectId = require("node-time-uuid");
 
-const app = require('../../app');
-const readableAPI = supertest.agent(app);
+const api = require('../../readableAPI');
+const readableAPI = supertest.agent(api);
 
 const token = Math.random()
     .toString(36)
@@ -133,7 +133,7 @@ describe('Testes Udacity Readable API', () => {
         })
     });
 
-    it('DELETE /posts/:id     ==> Definir o sinalizador excluído para uma postagem como "verdadeira"', done => {
+    it('DELETE /posts/:id    ==> Definir o sinalizador excluído para uma postagem como "verdadeira"', done => {
         readableAPI
         .delete('/posts/8xf0y6ziyjabvozdd253nd')
         .set(headers)
