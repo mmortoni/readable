@@ -1,11 +1,16 @@
 //app.js
 const express = require('express')
 const app = express()
+const cors = require('cors')
+
 const bodyParser = require('body-parser')
 
 const categories = require('./categories')
 const posts = require('./posts')
 const comments = require('./comments')
+
+app.use(express.static('public'))
+app.use(cors())
 
 app.get('/', (req, res) => {
     const help = `

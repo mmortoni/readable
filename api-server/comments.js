@@ -95,8 +95,8 @@ function vote (token, id, option) {
 function disableByParent (token, post) {
     return new Promise((res) => {
         let comments = getData(token)
-        keys = Object.keys(comments)
-        filtered_keys = keys.filter(key => comments[key].parentId === post.id)
+        let keys = Object.keys(comments)
+        let filtered_keys = keys.filter(key => comments[key].parentId === post.id)
         filtered_keys.forEach(key => comments[key].parentDeleted = true)
         res(post)
     })

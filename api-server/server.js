@@ -1,7 +1,5 @@
 require('dotenv').config()
 const app = require('./app')
-
-const cors = require('cors')
 const config = require('./config')
 
 app.listen(config.port, () => {

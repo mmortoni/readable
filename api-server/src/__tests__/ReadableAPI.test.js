@@ -17,7 +17,7 @@ const headers = {
 describe('Testes Udacity Readable API', () => {
     var categorias;
 
-    it('GET /                ==> Retorno text/html; charset=utf-8', done => {
+    it('GET /                ==> Retorno text/html; charset=utf-8.', done => {
         readableAPI
             .get('/')
             .set(headers)
@@ -83,7 +83,7 @@ describe('Testes Udacity Readable API', () => {
         commentCount: 0
     }; 
 
-    it('POST /posts          ==> Adicionar uma nova postagem', done => {
+    it('POST /posts          ==> Adicionar uma nova postagem.', done => {
         readableAPI
         .post('/posts')
         .set(headers)
@@ -96,7 +96,7 @@ describe('Testes Udacity Readable API', () => {
         })
     });
 
-    it('GET /posts/:id       ==> Obter os detalhes de uma única postagem', done => {
+    it('GET /posts/:id       ==> Obter os detalhes de uma única postagem.', done => {
         readableAPI
         .get('/posts/8xf0y6ziyjabvozdd253nds')
         .set(headers)
@@ -107,7 +107,7 @@ describe('Testes Udacity Readable API', () => {
         })
     });
 
-    it('POST /posts/:id      ==> Votar em uma postagem', done => {
+    it('POST /posts/:id      ==> Votar em uma postagem.', done => {
         readableAPI
         .post('/posts/6ni6ok3ym7mf1p33lnez')
         .send({option: 'upVote'})
@@ -118,5 +118,29 @@ describe('Testes Udacity Readable API', () => {
             done();
         })
     });
+    
+    it('PUT /posts/:id       ==> Editar os detalhes de uma postagem existente.', done => {
+        readableAPI
+        .put('/posts/6ni6ok3ym7mf1p33lnez')
+        .send({title: 'Titulo alterado', commentCount: 15})
+        .set(headers)
+        .expect(200)
+        .then(res => {
+            expect(res.body.id).toEqual('6ni6ok3ym7mf1p33lnez');
+            expect(res.body.title).toBe('Titulo alterado');
+            expect(res.body.commentCount).toBe(15);
+            done();
+        })
+    });
 
+    it('DELETE /posts/:id     ==> Definir o sinalizador excluído para uma postagem como "verdadeira"', done => {
+        readableAPI
+        .delete('/posts/8xf0y6ziyjabvozdd253nd')
+        .set(headers)
+        .expect(200)
+        .then(res => {
+            expect(res.body.deleted).toBe(true);
+            done();
+        })
+    });
 });
