@@ -191,4 +191,28 @@ describe('Testes Udacity Readable API', () => {
             done();
         })
     });    
+
+    it('PUT /comments/:id       ==> Editar os detalhes de uma postagem existente.', done => {
+        readableAPI
+        .put(`/comments/${comments.id}`)
+        .send({timestamp: timestamp, body: 'XCorpo do comentario.'})
+        .set(headers)
+        .expect(200)
+        .then(res => {
+            expect(res.body.timestamp).toEqual(timestamp);
+            expect(res.body.body).toBe('XCorpo do comentario.');
+            done();
+        })
+    });
+
+    it('DELETE /comments/:id    ==> Definir o sinalizador excluído para um comentário como "verdadeira"', done => {
+        readableAPI
+        .delete('/comments/8tu4bsun805n8un48ve89')
+        .set(headers)
+        .expect(200)
+        .then(res => {
+            expect(res.body.deleted).toBe(true);
+            done();
+        })
+    });
 });
