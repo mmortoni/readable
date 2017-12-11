@@ -17,7 +17,7 @@ const headers = {
 describe('Testes Udacity Readable API', () => {
     var categorias;
 
-    it('GET /                ==> Retorno text/html; charset=utf-8.', done => {
+    it('GET /                   ==> Retorno text/html; charset=utf-8.', done => {
         readableAPI
             .get('/')
             .set(headers)
@@ -30,7 +30,7 @@ describe('Testes Udacity Readable API', () => {
             });
     });
   
-    it('GET /categories      ==> Obter todas as categorias disponíveis para o aplicativo.', done => {
+    it('GET /categories         ==> Obter todas as categorias disponíveis para o aplicativo.', done => {
         readableAPI
         .get('/categories')
         .set(headers)
@@ -42,7 +42,7 @@ describe('Testes Udacity Readable API', () => {
         })
     });
 
-    it('GET /:category/posts ==> Obter todas as postagens para uma categoria específica.', done => {
+    it('GET /:category/posts    ==> Obter todas as postagens para uma categoria específica.', done => {
         categorias.forEach((categoria) => {
             readableAPI
             .get(`/${categoria.name}/posts`)
@@ -56,7 +56,7 @@ describe('Testes Udacity Readable API', () => {
         });        
     });
 
-    it('GET /posts           ==> Obter todas as postagens.', done => {
+    it('GET /posts              ==> Obter todas as postagens.', done => {
         readableAPI
         .get('/posts')
         .set(headers)
@@ -83,7 +83,7 @@ describe('Testes Udacity Readable API', () => {
         commentCount: 0
     }; 
 
-    it('POST /posts          ==> Adicionar uma nova postagem.', done => {
+    it('POST /posts             ==> Adicionar uma nova postagem.', done => {
         readableAPI
         .post('/posts')
         .set(headers)
@@ -96,7 +96,7 @@ describe('Testes Udacity Readable API', () => {
         })
     });
 
-    it('GET /posts/:id       ==> Obter os detalhes de uma única postagem.', done => {
+    it('GET /posts/:id          ==> Obter os detalhes de uma única postagem.', done => {
         readableAPI
         .get('/posts/8xf0y6ziyjabvozdd253nds')
         .set(headers)
@@ -107,7 +107,7 @@ describe('Testes Udacity Readable API', () => {
         })
     });
 
-    it('POST /posts/:id      ==> Votar em uma postagem.', done => {
+    it('POST /posts/:id         ==> Votar em uma postagem.', done => {
         readableAPI
         .post('/posts/6ni6ok3ym7mf1p33lnez')
         .send({option: 'upVote'})
@@ -119,7 +119,7 @@ describe('Testes Udacity Readable API', () => {
         })
     });
     
-    it('PUT /posts/:id       ==> Editar os detalhes de uma postagem existente.', done => {
+    it('PUT /posts/:id          ==> Editar os detalhes de uma postagem existente.', done => {
         readableAPI
         .put('/posts/6ni6ok3ym7mf1p33lnez')
         .send({title: 'Titulo alterado', commentCount: 15})
@@ -133,7 +133,7 @@ describe('Testes Udacity Readable API', () => {
         })
     });
 
-    it('DELETE /posts/:id    ==> Definir o sinalizador excluído para uma postagem como "verdadeira"', done => {
+    it('DELETE /posts/:id       ==> Definir o sinalizador excluído para uma postagem como "verdadeira"', done => {
         readableAPI
         .delete('/posts/8xf0y6ziyjabvozdd253nd')
         .set(headers)
@@ -143,4 +143,52 @@ describe('Testes Udacity Readable API', () => {
             done();
         })
     });
+
+    it('GET /posts/:id/comments ==> Obter todos os comentários para uma única publicação.', done => {
+        readableAPI
+        .get('/posts/8xf0y6ziyjabvozdd253nd/comments')
+        .set(headers)
+        .expect(200)
+        .then(res => {
+            expect(res.body).toBeInstanceOf(Array);
+            done();
+        })
+    });
+
+    buffer = id.get().toString('base64');
+    timestamp = parseInt(new Date().getTime()/1000, 10);
+
+    let comments = {
+        id: buffer.toLowerCase(),
+        parentId: "8xf0y6ziyjabvozdd253nds",
+        timestamp: timestamp,
+        body: 'Corpo do comentario.',
+        author: 'author',
+        voteScore: 0,
+        deleted: false,
+        parentDeleted: false
+    }; 
+
+    it('POST /comments          ==> Adicionar um comentário a uma publicação.', done => {
+        readableAPI
+        .post('/comments')
+        .send(comments)
+        .set(headers)
+        .expect(200)
+        .then(res => {
+            expect(res.body.id).toEqual(comments.id);
+            done();
+        })
+    });
+
+    it('GET /comments/:id       ==> Obter os detalhes para um único comentário.', done => {
+        readableAPI
+        .get(`/comments/${comments.id}`)
+        .set(headers)
+        .expect(200)
+        .then(res => {
+            expect(res.body.id).toEqual(comments.id);
+            done();
+        })
+    });    
 });
