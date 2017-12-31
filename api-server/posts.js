@@ -71,18 +71,6 @@ function get (token, id) {
   })
 }
 
-function filterQueryString(posts, q, field, key) {
-  let result = true
-
-  if(Array.isArray(field)){
-    result = field.some(f => posts['byId'][key][f].indexOf(q) !== -1)
-  } else {
-    result = posts['byId'][key][field].indexOf(q) !== -1
-  }
-
-  return result
-}
-
 function getAll (token,q,field) {
   return new Promise((res) => {
     const posts = getData(token)
@@ -90,7 +78,17 @@ function getAll (token,q,field) {
     let filtered_keys = Object.keys(posts['byId']).filter(key => !posts['byId'][key].deleted)
 
     if(typeof q !== "undefined" && field !== "undefined") {
-      filtered_keys = filtered_keys.filter(key => filterQueryString(posts, q, field, key))
+      q = q.toLowerCase()
+      filtered_keys = filtered_keys.filter(key => {
+          let result = false
+          if(Array.isArray(field)){
+            result = field.some(f => posts['byId'][key][f].toLowerCase().indexOf(q) !== -1)
+          } else {
+            result = posts['byId'][key][field].toLowerCase().indexOf(q) !== -1
+          }
+          return result
+        }
+      )
     }
 
     for(let key in posts['byId']) {
