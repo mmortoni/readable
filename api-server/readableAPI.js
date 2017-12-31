@@ -149,7 +149,7 @@ app.get('/', (req, res) => {
   })
   
   app.get('/posts', (req, res) => {
-      posts.getAll(req.token)
+    posts.getAll(req.token, req.query.q, req.query.field)
         .then(
             (data) => res.send(data),
             (error) => {
@@ -160,7 +160,7 @@ app.get('/', (req, res) => {
           }
         )
   })
-  
+
   app.post('/posts', bodyParser.json(), (req, res) => {
       posts.add(req.token, req.body)
         .then(

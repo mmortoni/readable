@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-const api = process.env.REACT_APP_READABLE_API || "https://localhost:3001";
+const api = process.env.REACT_APP_READABLE_API || "https://localhost:3030";
 
 let token = localStorage.token;
 
@@ -15,39 +15,11 @@ const headers = {
     "Content-Type": "application/json"
 };
 
-
-// This commands loads the mocked request.js as defined in __mocks__/request.js
-jest.mock('../request')
-
-const github = require('../github')
-
-// A simple example test
-describe('#getUser() using Promises', () => {
-  it('should load user data', () => {
-    return github.getUser('vnglst')
-    .then(data => {
-      expect(data).toBeDefined()
-      expect(data.entity.name).toEqual('Koen van Gilst')
-    })
-  })
-})
-
-// The exact same test using async/await
-describe('#getUser() using async/await', () => {
-  it('should load user data', async () => {
-    const data = await github.getUser('vnglst')
-    expect(data).toBeDefined()
-    expect(data.entity.name).toEqual('Koen van Gilst')
-  })
-})
-
-
-
 export const getPosts = () =>
-    fetch('posts', { headers }).then(res => res.json());
+    fetch(`${api}/posts`, { headers }).then(res => res.json());
 
 export const addPost = () =>
-    fetch('posts', {
+    fetch(`${api}/posts`, {
         method: "POST",
         headers
     })
@@ -55,7 +27,7 @@ export const addPost = () =>
         .then(data => console.log(data));
 
 export const votePost = (postID, status) =>
-    fetch(`posts/${postID}`, {
+    fetch(`${api}/posts/${postID}`, {
         method: "POST",
         headers: headers,
         body: JSON.stringify({ option: status })
@@ -64,13 +36,13 @@ export const votePost = (postID, status) =>
         .catch(error => error);
 
 export const getComments = postID =>
-    fetch(`posts/${postID}/comments`, {
+    fetch(`${api}/posts/${postID}/comments`, {
         method: "GET",
         headers
     }).then(res => res.json());
 
 export const voteComment = (postID, status) =>
-    fetch(`comments/${postID}`, {
+    fetch(`${api}/comments/${postID}`, {
         method: "POST",
         headers: headers,
         body: JSON.stringify({ option: status })
@@ -79,7 +51,7 @@ export const voteComment = (postID, status) =>
         .catch(error => error);
 
 export const addComment = comment =>
-    fetch('comments', {
+    fetch(`${api}/comments`, {
         method: "POST",
         headers,
         // body: JSON.stringify(comment)
@@ -89,7 +61,7 @@ export const addComment = comment =>
         .catch(error => error);
 
 export const deleteComment = commentID =>
-    fetch(`comments/${commentID}`, {
+    fetch(`${api}/comments/${commentID}`, {
         method: "DELETE",
         headers
     })
@@ -100,6 +72,6 @@ export const deleteComment = commentID =>
         .catch(error => error);
 
 export const getCategories = () =>
-    fetch('categories', { headers })
+    fetch(`${api}/categories`, { headers })
         .then(res => res.json())
         .catch(error => error);

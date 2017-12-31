@@ -29,6 +29,6 @@
     "supertest": "^3.0.0"
   },
   "scripts": {
-    "test": "react-scripts test --env=jsdom"
+    "test": "react-scripts test --env=jsdom" 
   }
 }

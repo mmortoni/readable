@@ -1,21 +1,47 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap';
+import { Route, IndexRoute, Router, hashHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
+import { Provider } from 'react-redux';
+import store from './store';
+import { Dashboard, PostsIndex, PostsEdit } from './containers/index';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+require('./app.scss');
+
+const history = syncHistoryWithStore(hashHistory, store);
+
+let App = ({children}) => {
+  return (
+    <div>
+      <Navbar>
+        <Nav>
+          <IndexLinkContainer to="/">
+            <NavItem>Dashboard</NavItem>
+          </IndexLinkContainer>
+          <LinkContainer to="/posts">
+            <NavItem>Posts</NavItem>
+          </LinkContainer>
+        </Nav>
+      </Navbar>
+      <div className="container">
+        {children}
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-export default App;
+export default () => {
+  return (
+    <Provider store={store}>
+      <Router history={history}>
+        <Route path="/" component={App}>
+          <IndexRoute component={Dashboard} />
+          <Route path="/posts" component={PostsIndex} />
+          <Route path="/posts/new" component={PostsEdit} />
+          <Route path="/posts/:postId" component={PostsEdit} />
+        </Route>
+      </Router>
+    </Provider>
+  )
+}
