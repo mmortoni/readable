@@ -26,7 +26,7 @@ export class PostsIndex extends React.Component {
     super(props, context);
 
     this.classNames = 'glyphicon glyphicon-sort-by-alphabet';
-    this.sortParams = { sortDesc: false, sortKey: '' };
+    this.sortParams = { sortDesc: false, sortKey: '', sortOrder: ['asc'] };
     this.deletePost = this.deletePost.bind(this);
     this.handleSearch = this.handleSearch.bind(this, 'title');
     this.onSortingChange = this.onSortingChange.bind(this);
@@ -55,19 +55,23 @@ export class PostsIndex extends React.Component {
   }
 
   handleClick(e) {
-    e.preventDefault();
+    e.preventDefault()
 
     if(e.target.value === 'DESC') {
       this.sortParams.sortDesc = false;
-      this.refs.refSpan.classList.remove('glyphicon-sort-by-alphabet-alt');
-      this.refs.refSpan.classList.add('glyphicon-sort-by-alphabet');
-      e.target.value = 'ASC';
+      this.sortParams.sortOrder[0] = 'asc'
+      this.refs.refSpan.classList.remove('glyphicon-sort-by-alphabet-alt')
+      this.refs.refSpan.classList.add('glyphicon-sort-by-alphabet')
+      e.target.value = 'ASC'
     } else {
       this.sortParams.sortDesc = true;
-      this.refs.refSpan.classList.remove('glyphicon-sort-by-alphabet');
-      this.refs.refSpan.classList.add('glyphicon-sort-by-alphabet-alt');
-      e.target.value = 'DESC';
+      this.sortParams.sortOrder[0] = 'desc'
+      this.refs.refSpan.classList.remove('glyphicon-sort-by-alphabet')
+      this.refs.refSpan.classList.add('glyphicon-sort-by-alphabet-alt')
+      e.target.value = 'DESC'
     }
+
+    this.onSortingChange(this.refs.refSelect.value)
 
     return false;
   }
@@ -87,7 +91,7 @@ export class PostsIndex extends React.Component {
           </div>
           <div className="col-md-4">
             Ordenar por:&nbsp;
-            <select
+            <select ref="refSelect"
               value={sort.sortKey}
               onChange={e => this.onSortingChange(e.target.value)}
             >
