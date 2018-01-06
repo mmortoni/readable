@@ -25,9 +25,12 @@ export class PostsIndex extends React.Component {
   constructor(props, context) {
     super(props, context);
 
+    this.classNames = 'glyphicon glyphicon-sort-by-alphabet';
+    this.sortParams = { sortDesc: false, sortKey: '' };
     this.deletePost = this.deletePost.bind(this);
     this.handleSearch = this.handleSearch.bind(this, 'title');
     this.onSortingChange = this.onSortingChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -47,7 +50,26 @@ export class PostsIndex extends React.Component {
   }
 
   onSortingChange(value){
-    this.context.store.dispatch(postsActions.sortPosts({value: value, props: this.props}));
+    this.sortParams.sortKey = value;
+    this.context.store.dispatch(postsActions.sortPosts({params: this.sortParams, props: this.props}));
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+
+    if(e.target.value === 'DESC') {
+      this.sortParams.sortDesc = false;
+      this.refs.refSpan.classList.remove('glyphicon-sort-by-alphabet-alt');
+      this.refs.refSpan.classList.add('glyphicon-sort-by-alphabet');
+      e.target.value = 'ASC';
+    } else {
+      this.sortParams.sortDesc = true;
+      this.refs.refSpan.classList.remove('glyphicon-sort-by-alphabet');
+      this.refs.refSpan.classList.add('glyphicon-sort-by-alphabet-alt');
+      e.target.value = 'DESC';
+    }
+
+    return false;
   }
 
   render() {
@@ -74,11 +96,16 @@ export class PostsIndex extends React.Component {
               <option value="author">Autor</option>
               <option value="voteScore">Like</option>
               <option value="timestamp">Data</option>
-            </select>
+            </select>&nbsp;
+            <div className="btn-group btn-toggle vcenter"> 
+              <button className="btn btn-md btn-default vcenter active" value="ASC" onClick={e => this.handleClick(e)}>
+                <span ref="refSpan" className="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>
+              </button>
+            </div>
           </div>
           <div className="col-md-2 text-right">
             <Link to="/posts/new" className="btn btn-primary a-btn-slide-text">
-              <span className="glyphicon glyphicon-plus" aria-hidden="true"></span>
+              <span style={{class: this.classNames}} aria-hidden="true"></span>
               <span><strong>Novo Post</strong></span>
             </Link>
           </div>

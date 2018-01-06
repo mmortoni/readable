@@ -10,3 +10,5 @@ export const DELETE = 'posts/DELETE';
 export const DELETE_SUCCESS = 'posts/DELETE_SUCCESS';
 export const SORT_COLLECTION = 'posts/SORT_COLLECTION';
 export const SORT_SUCCESS = 'posts/SORT_SUCCESS';
+//sort_posts_sucess
+

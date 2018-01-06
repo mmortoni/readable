@@ -6,7 +6,7 @@
     "build": "webpack -p --progress --config webpack.config.js",
     "server": "webpack-dev-server --inline --progress --port 3001",
     "server-api": "node server/index.js",
-    "start": "npm run server"    
+    "start": "npm run server"
   },
   "keywords": [
     "udacity",

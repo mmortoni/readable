@@ -106,10 +106,6 @@ a.btn {
     margin-left: 70px;
   }
   
-  button {
-    margin: 5px 20px;
-  }
-  
   .comment {
     height: 150px;
     display: flex;
@@ -190,3 +186,9 @@ a.btn {
   .form-style-1 .required{
     color:red;
   }
+
+  .vcenter {
+    display: inline-block;
+    vertical-align: top;
+    float: none;
+}

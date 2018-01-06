@@ -37,7 +37,7 @@ export function fetchPosts(action$) {
     .switchMap(params => {
       return Observable.fromPromise(
         axios.get(`${api}/posts?${querystring.stringify(params)}`, {headers: headers})
-      ).map(res => postsActions.fetchPostsSuccess(res.data, params, { sortDesc: false, sortKey: 'title' }));
+      ).map(res => postsActions.fetchPostsSuccess(res.data, params, { sortDesc: false, sortKey: 'voteScore' }));
     });
 }
 
