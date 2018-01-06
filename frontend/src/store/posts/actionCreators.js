@@ -54,12 +54,15 @@ export function sortPosts(payload) {
 }
 
 export function sortSuccess(posts, params, sort) {
-  const byId = Object.assign({}, _(keyBy(posts, (post) => post.id))
+  let byId = Object.assign({}, _(keyBy(posts, (post) => post.id))
   .map(function(v, k) {
     return _.merge({}, v, { key: k });
   })
   .sortBy(sort.sortKey)
   .value());
 
+  if(sort.sortDesc)
+    byId = byId.reverse();
+    
   return {type: actionTypes.SORT_SUCCESS, payload: { byId, params, sort }};
 }

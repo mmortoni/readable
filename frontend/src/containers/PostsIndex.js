@@ -51,7 +51,7 @@ export class PostsIndex extends React.Component {
 
   onSortingChange(value){
     this.sortParams.sortKey = value;
-    this.context.store.dispatch(postsActions.sortPosts({params: this.sortParams, props: this.props}));
+    this.context.store.dispatch(postsActions.sortPosts({sortParams: this.sortParams, props: this.props}));
   }
 
   handleClick(e) {
@@ -98,7 +98,7 @@ export class PostsIndex extends React.Component {
               <option value="timestamp">Data</option>
             </select>&nbsp;
             <div className="btn-group btn-toggle vcenter"> 
-              <button className="btn btn-md btn-default vcenter active" value="ASC" onClick={e => this.handleClick(e)}>
+              <button className="btn btn-md btn-default active" value="ASC" onClick={e => this.handleClick(e)}>
                 <span ref="refSpan" className="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>
               </button>
             </div>

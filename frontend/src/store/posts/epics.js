@@ -43,7 +43,7 @@ export function fetchPosts(action$) {
 
 export function sortPosts(action$) {
   return action$.ofType(actionTypes.SORT_COLLECTION)
-    .map(action =>  postsActions.sortSuccess(action.payload.props.posts, action.payload.props.params, { sortDesc: false, sortKey: action.payload.value }));
+    .map(action =>  postsActions.sortSuccess(action.payload.props.posts, action.payload.props.params, action.payload.sortParams));
 }
 
 export function updatePost(action$) {
