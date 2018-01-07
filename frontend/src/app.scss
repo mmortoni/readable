@@ -72,7 +72,11 @@ a.btn {
     margin-top: 12px;    
     align-items: center;  
   }
-  
+
+  .post-likes img {
+    cursor: pointer;
+  }
+
   .post-title {
     margin-top: 0;
   }

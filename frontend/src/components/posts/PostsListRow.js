@@ -1,9 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React from 'react'
+import { Link } from 'react-router'
 
 import ThumbsUp from '../../images/thumbs-up.png'
 import ThumbsDown from '../../images/thumbs-down.png'
-import { formatTimestamp } from '../../utils/Utils';
+import { formatTimestamp } from '../../utils/Utils'
+//import { votePost } from '../../store/epics'
 
 export const PostsListRow = ({post, onDelete}) => {
   if(!post) {

@@ -22,7 +22,7 @@ const headers = {
 };
 
 export function fetchPost(action$) {
-  return action$.ofType(actionTypes.FETCH_ONE)
+  return action$.ofType(actionTypes.POST_FETCH_ONE)
     .map(action => action.payload)
     .switchMap(id => {
       return Observable.fromPromise(
@@ -32,7 +32,7 @@ export function fetchPost(action$) {
 }
 
 export function fetchPosts(action$) {
-  return action$.ofType(actionTypes.FETCH_COLLECTION)
+  return action$.ofType(actionTypes.POST_FETCH_COLLECTION)
     .map(action => action.payload)
     .switchMap(params => {
       return Observable.fromPromise(
@@ -42,12 +42,12 @@ export function fetchPosts(action$) {
 }
 
 export function sortPosts(action$) {
-  return action$.ofType(actionTypes.SORT_COLLECTION)
+  return action$.ofType(actionTypes.POST_SORT)
     .map(action =>  postsActions.sortSuccess(action.payload.props.posts, action.payload.props.params, action.payload.sortParams));
 }
 
 export function updatePost(action$) {
-  return action$.ofType(actionTypes.UPDATE)
+  return action$.ofType(actionTypes.POST_UPDATE)
     .map(action => action.payload)
     .switchMap(post => {
       return Observable.merge(
@@ -59,13 +59,26 @@ export function updatePost(action$) {
     });
 }
 
+export function votePost(action$) {
+  return action$.ofType(actionTypes.POST_VOTE)
+    .map(action => action.payload)
+    .switchMap(option => {
+      return Observable.merge(
+        Observable.fromPromise(
+          axios.post(`${api}/posts/${post.id}`, JSON.stringify({ option }), {headers: headers})
+        ).map(res => postsActions.updatePostSuccess(res.data)),
+        Observable.of(push('/posts'))
+      );
+    });
+}
+
 export function createPost(action$) {
-  return action$.ofType(actionTypes.CREATE)
+  return action$.ofType(actionTypes.POST_CREATE)
     .map(action => action.payload)
     .switchMap(post => {
       return Observable.merge(
         Observable.fromPromise(
-          axios.post(`${api}/posts`, post)
+          axios.post(`${api}/posts`, post, {headers: headers})
         ).map(res => postsActions.createPostSuccess(res.data)),
         Observable.of(push('/posts'))
       );
@@ -73,7 +86,7 @@ export function createPost(action$) {
 }
 
 export function deletePost(action$) {
-  return action$.ofType(actionTypes.DELETE)
+  return action$.ofType(actionTypes.POST_DELETE)
     .map(action => action.payload)
     .switchMap(post => {
       return Observable.fromPromise(

@@ -23,26 +23,27 @@ export class PostsIndex extends React.Component {
   };
 
   constructor(props, context) {
-    super(props, context);
+    super(props, context)
 
-    this.classNames = 'glyphicon glyphicon-sort-by-alphabet';
-    this.sortParams = { sortDesc: false, sortKey: '', sortOrder: ['asc'] };
-    this.deletePost = this.deletePost.bind(this);
-    this.handleSearch = this.handleSearch.bind(this, 'title');
-    this.onSortingChange = this.onSortingChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.classNames = 'glyphicon glyphicon-sort-by-alphabet'
+    this.sortParams = { sortDesc: false, sortKey: '', sortOrder: ['asc'] }
+    this.deletePost = this.deletePost.bind(this)
+    this.handleSearch = this.handleSearch.bind(this, 'title')
+    this.onSortingChange = this.onSortingChange.bind(this)
+    this.handleClick = this.handleClick.bind(this)
+    //this.votePost = this.votePost.bind(this)
   }
 
   componentDidMount() {
-    this.fetchPosts({});
+    this.fetchPosts({})
   }
 
   fetchPosts(params) {
-    this.context.store.dispatch(postsActions.fetchPosts(params));
+    this.context.store.dispatch(postsActions.fetchPosts(params))
   }
 
   deletePost(post) {
-    this.context.store.dispatch(postsActions.deletePost(post));
+    this.context.store.dispatch(postsActions.deletePost(post))
   }
 
   handleSearch(field, value) {
@@ -50,21 +51,21 @@ export class PostsIndex extends React.Component {
   }
 
   onSortingChange(value){
-    this.sortParams.sortKey = value;
-    this.context.store.dispatch(postsActions.sortPosts({sortParams: this.sortParams, props: this.props}));
+    this.sortParams.sortKey = value
+    this.context.store.dispatch(postsActions.sortPosts({sortParams: this.sortParams, props: this.props}))
   }
 
   handleClick(e) {
     e.preventDefault()
 
     if(e.target.value === 'DESC') {
-      this.sortParams.sortDesc = false;
+      this.sortParams.sortDesc = false
       this.sortParams.sortOrder[0] = 'asc'
       this.refs.refSpan.classList.remove('glyphicon-sort-by-alphabet-alt')
       this.refs.refSpan.classList.add('glyphicon-sort-by-alphabet')
       e.target.value = 'ASC'
     } else {
-      this.sortParams.sortDesc = true;
+      this.sortParams.sortDesc = true
       this.sortParams.sortOrder[0] = 'desc'
       this.refs.refSpan.classList.remove('glyphicon-sort-by-alphabet')
       this.refs.refSpan.classList.add('glyphicon-sort-by-alphabet-alt')
@@ -73,11 +74,15 @@ export class PostsIndex extends React.Component {
 
     this.onSortingChange(this.refs.refSelect.value)
 
-    return false;
+    return false
   }
 
+//  votePost(id, option){
+//    console.log(id + '<==>' + option)
+//  }
+
   render() {
-    const { sort, params, posts } = this.props;
+    const { sort, params, posts } = this.props
 
     return (
       <div>
