@@ -4,9 +4,8 @@ import { Link } from 'react-router'
 import ThumbsUp from '../../images/thumbs-up.png'
 import ThumbsDown from '../../images/thumbs-down.png'
 import { formatTimestamp } from '../../utils/Utils'
-//import { votePost } from '../../store/epics'
 
-export const PostsListRow = ({post, onDelete}) => {
+export const PostsListRow = ({post, onDelete, onVotePost}) => {
   if(!post) {
     return <tr><td><div>404 Post Not Found!</div></td></tr>
   }
@@ -21,14 +20,8 @@ export const PostsListRow = ({post, onDelete}) => {
             </Link>
             <div className="post-body"><p>{post.body}</p></div>
             <div className="post-likes">
-              <img src={ThumbsUp} width="28" height="28" onClick={() => {
-                votePost(post.id, "upVote")
-                fetchAllPosts()
-              }} />
-              <img src={ThumbsDown} width="28" height="28" onClick={() => {
-                votePost(post.id, "downVote")
-                fetchAllPosts()
-              }} />
+              <img src={ThumbsUp} width="28" height="28" onClick={onVotePost.bind(this, post.id, "upVote")} />
+              <img src={ThumbsDown} width="28" height="28" onClick={onVotePost.bind(this, post.id, "downVote")} />
             </div>
             <div className="post-likes-comments">
               {post.voteScore} votes {post.comments && post.comments.length > 0 ? post.comments.length : 0} comments

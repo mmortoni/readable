@@ -47,6 +47,7 @@ const defaultData = {
 function getData (token) {
   if(!db[token])
     db[token] = JSON.parse(JSON.stringify(defaultData))
+
   let data = JSON.parse(JSON.stringify(db[token]))
   return data
 }
@@ -126,8 +127,8 @@ function add (token, post) {
 function vote (token, id, option) {
   return new Promise((res) => {
     let posts = getData(token)
-    let post = posts[id]
-
+    let post = posts.byId[id]
+    // update db[token] (08/01/2018)
     switch(option) {
         case "upVote":
         post.voteScore = post.voteScore + 1
@@ -138,6 +139,7 @@ function vote (token, id, option) {
         default:
             console.log(`posts.vote received incorrect parameter: ${option}`)
     }
+
     res(post)
   })
 }

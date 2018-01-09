@@ -1,7 +1,7 @@
 import React from 'react';
 import { PostsListRow } from './PostsListRow';
 
-export const PostsList = ({posts, onDelete}) => {
+export const PostsList = ({posts, onDelete, onVotePost}) => {
   return (
     <table className="table table-hover">
       <thead>
@@ -10,7 +10,7 @@ export const PostsList = ({posts, onDelete}) => {
       </tr>
       </thead>
       <tbody>
-      {posts.map(post => PostsListRow({post, onDelete}))}
+      {posts.map(post => PostsListRow({post, onDelete, onVotePost}))}
       </tbody>
     </table>
   )

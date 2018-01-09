@@ -15,12 +15,13 @@ export function fetchPosts(payload) {
 }
 
 export function fetchPostsSuccess(posts, params, sort) {
-  const byId = Object.assign({}, _(keyBy(posts[0], (post) => post.id))
-  .map(function(v, k) {
-    return _.merge({}, v, { key: k });
-  })
-  .sortBy(sort.sortKey)
-  .value());
+  let byId = Object.assign({}, _(keyBy(posts[0], (post) => post.id))
+            .map(function(v, k) {
+              return _.merge({}, v, { key: k })
+            })
+            .value())
+
+  byId = _.orderBy(byId, sort.sortKey, sort.sortOrder)
 
   return {type: actionTypes.POST_FETCH_COLLECTION_SUCCESS, payload: { byId, params, sort }};
 }
@@ -68,7 +69,7 @@ export function sortSuccess(posts, params, sort) {
             })
             .value())
 
-    byId = _.orderBy(byId, sort.sortKey, sort.sortOrder)
+  byId = _.orderBy(byId, sort.sortKey, sort.sortOrder)
 
   return {type: actionTypes.POST_SORT_SUCESS, payload: { byId, params, sort }};
 }

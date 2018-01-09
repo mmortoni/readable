@@ -7,7 +7,6 @@ import { push } from 'react-router-redux';
 import * as actionTypes from './actionTypes';
 import * as postsActions from './actionCreators';
 
-const api = process.env.REACT_APP_READABLE_API || "http://localhost:3030";
 let token = localStorage.token;
 
 if (!token)
@@ -15,18 +14,22 @@ token = localStorage.token = Math.random()
                                 .toString(36)
                                 .substr(-8);
 
-const headers = {
-    Accept: "application/json",
-    Authorization: token,
-    "Content-Type": "application/json"
-};
+const instanceAxios = axios.create({
+  baseURL: process.env.REACT_APP_READABLE_API || 'http://localhost:3030',
+  timeout: 5000,
+  headers: {
+    'Accept': 'application/json',
+    'Authorization': token,
+    'Content-Type': 'application/json'
+  }
+})
 
 export function fetchPost(action$) {
   return action$.ofType(actionTypes.POST_FETCH_ONE)
     .map(action => action.payload)
     .switchMap(id => {
       return Observable.fromPromise(
-        axios.get(`${api}/posts/${id}`, {headers: headers})
+        instanceAxios.get(`/posts/${ id }`)
       ).map(res => postsActions.fetchPostSuccess(res.data));
     });
 }
@@ -36,9 +39,9 @@ export function fetchPosts(action$) {
     .map(action => action.payload)
     .switchMap(params => {
       return Observable.fromPromise(
-        axios.get(`${api}/posts?${querystring.stringify(params)}`, {headers: headers})
-      ).map(res => postsActions.fetchPostsSuccess(res.data, params, { sortDesc: false, sortKey: 'voteScore' }));
-    });
+        instanceAxios.get(`/posts?${ querystring.stringify(params) }`)
+      ).map(res => postsActions.fetchPostsSuccess(res.data, params, { sortDesc: false, sortKey: 'voteScore', sortOrder: ['asc'] }))
+    })
 }
 
 export function sortPosts(action$) {
@@ -52,7 +55,7 @@ export function updatePost(action$) {
     .switchMap(post => {
       return Observable.merge(
         Observable.fromPromise(
-          axios.put(`${api}/posts/${post.id}`, post, {headers: headers})
+          instanceAxios.put(`/posts/${ post.id }`, post)
         ).map(res => postsActions.updatePostSuccess(res.data)),
         Observable.of(push('/posts'))
       );
@@ -62,11 +65,11 @@ export function updatePost(action$) {
 export function votePost(action$) {
   return action$.ofType(actionTypes.POST_VOTE)
     .map(action => action.payload)
-    .switchMap(option => {
-      return Observable.merge(
+      .switchMap(payload => {
+        return Observable.merge(
         Observable.fromPromise(
-          axios.post(`${api}/posts/${post.id}`, JSON.stringify({ option }), {headers: headers})
-        ).map(res => postsActions.updatePostSuccess(res.data)),
+          instanceAxios.post(`/posts/${ payload.id }`, {option: payload.option})
+        ).map(res => postsActions.votePostSuccess(res.data)),
         Observable.of(push('/posts'))
       );
     });
@@ -78,7 +81,7 @@ export function createPost(action$) {
     .switchMap(post => {
       return Observable.merge(
         Observable.fromPromise(
-          axios.post(`${api}/posts`, post, {headers: headers})
+          instanceAxios.post(`/posts`, post)
         ).map(res => postsActions.createPostSuccess(res.data)),
         Observable.of(push('/posts'))
       );
@@ -90,7 +93,7 @@ export function deletePost(action$) {
     .map(action => action.payload)
     .switchMap(post => {
       return Observable.fromPromise(
-        axios.delete(`${api}/posts/${post.id}`, {headers: headers})
+        instanceAxios.delete(`/posts/${post.id}`)
       ).map(res => postsActions.deletePostSuccess(post));
     });
 }

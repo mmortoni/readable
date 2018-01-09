@@ -31,7 +31,7 @@ export class PostsIndex extends React.Component {
     this.handleSearch = this.handleSearch.bind(this, 'title')
     this.onSortingChange = this.onSortingChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
-    //this.votePost = this.votePost.bind(this)
+    this.votePost = this.votePost.bind(this)
   }
 
   componentDidMount() {
@@ -46,6 +46,11 @@ export class PostsIndex extends React.Component {
     this.context.store.dispatch(postsActions.deletePost(post))
   }
 
+  votePost(id, option){
+    this.context.store.dispatch(postsActions.votePost({id: id, option: option}))
+    //                fetchAllPosts()
+  }
+    
   handleSearch(field, value) {
     this.fetchPosts({q: value, field: field})
   }
@@ -76,10 +81,6 @@ export class PostsIndex extends React.Component {
 
     return false
   }
-
-//  votePost(id, option){
-//    console.log(id + '<==>' + option)
-//  }
 
   render() {
     const { sort, params, posts } = this.props
@@ -120,7 +121,7 @@ export class PostsIndex extends React.Component {
           </div>
         </div>
         {posts.length > 0 &&
-        <PostsList posts={posts} onDelete={this.deletePost}/>}
+        <PostsList posts={posts} onDelete={this.deletePost} onVotePost={this.votePost}/>}
       </div>
     );
   }
