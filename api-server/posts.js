@@ -136,7 +136,6 @@ function vote (token, id, option) {
   return new Promise((res) => {
     let posts = getData(token)
     let post = posts.byId[id]
-    // update db[token] (08/01/2018)
     switch(option) {
         case "upVote":
         post.voteScore = post.voteScore + 1
@@ -160,14 +159,17 @@ function disable (token, id) {
     })
 }
 
-function edit (token, id, post) {
+function edit (token, id, postObject) {
     return new Promise((res) => {
         let posts = getData(token)
+        let post = posts.byId[id]
+
         let prop
-        for (prop in post) {
-          posts[id][prop] = post[prop]
+        for (prop in postObject) {
+          post[prop] = postObject[prop]
         }
-        res(posts[id])
+        
+        res(post)
     })
 }
 

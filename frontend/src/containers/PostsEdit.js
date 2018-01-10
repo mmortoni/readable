@@ -29,7 +29,7 @@ export class PostsEdit extends React.Component {
     this.state = {
       ...this.state,
       postId: this.props.params.postId,
-      post: {title: '', body: ''}
+      post: this.props.post // {title: '', body: ''}
     };
   }
 
@@ -40,9 +40,9 @@ export class PostsEdit extends React.Component {
   }
 
   componentDidMount() {
-    if (this.state.postId) {
-      this.context.store.dispatch(postsActions.fetchPost(this.props.params.postId));
-    }
+//    if (this.state.postId) {
+//      this.context.store.dispatch(postsActions.fetchPost(this.props.params.postId));
+//    }
   }
 
   handleChange(field, e) {

@@ -55,7 +55,7 @@ export function updatePost(action$) {
     .switchMap(post => {
       return Observable.merge(
         Observable.fromPromise(
-          instanceAxios.put(`/posts/${ post.id }`, post)
+          instanceAxios.put(`/posts/${ post.id }`, {title: post.title, body: post.body})
         ).map(res => postsActions.updatePostSuccess(res.data)),
         Observable.of(push('/posts'))
       );

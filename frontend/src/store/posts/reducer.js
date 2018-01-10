@@ -6,18 +6,9 @@ const initialState = Immutable({
   params: {},
   sort: {}
 })
-/*
-const postReducer = (state, action) => {
-	switch (action.type) {
-		case 'postVote':
-			return Object.assign(
-				[...state], 
-				{ [action.index]: Object.assign({}, state[action.index], {voteScore: action.voteScore}) }
-			)
-	}
-}
-*/
+
 export default (state = initialState, action) => {
+  let  newById
   switch (action.type) {
     case actionTypes.POST_FETCH_ONE_SUCCESS:
     case actionTypes.POST_FETCH_COLLECTION_SUCCESS:
@@ -28,9 +19,22 @@ export default (state = initialState, action) => {
       })
     case actionTypes.POST_CREATE_SUCCESS:
     case actionTypes.POST_UPDATE_SUCCESS:
-      return state.setIn(['byId', action.payload.id], action.payload)
+      newById =  state.byId.map(post =>
+        post.id === action.payload.id
+          ? { ...post, title: action.payload.title, body: action.payload.body }
+          : post
+      )
+
+      if(state.sort.sortKey === 'title')
+        newById = _.orderBy(newById, state.sort.sortKey, state.sort.sortOrder)
+
+      return state.merge({
+        sort: state.sort || {},
+        params: state.params || {},
+        byId: newById || {}
+      })
     case actionTypes.POST_VOTE_SUCCESS:
-      let  newById =  state.byId.map(post =>
+      newById =  state.byId.map(post =>
         post.id === action.payload.id
           ? { ...post, voteScore: action.payload.voteScore }
           : post

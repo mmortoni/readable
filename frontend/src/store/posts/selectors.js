@@ -7,7 +7,7 @@ export function getSort(state) {
 }
 
 export function getPost(state, id) {
-  return state.posts.byId[id];
+  return state.posts.byId.find(post => post.id === id);
 }
 
 export function getPosts(state) {
