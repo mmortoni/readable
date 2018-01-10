@@ -45,13 +45,21 @@ const defaultData = {
 }
 
 function getData (token) {
+  let data = db[token]
+  if (data == null) {
+    data = db[token] = clone(defaultData)
+  }
+  return data
+}
+/*
+function getData (token) {
   if(!db[token])
     db[token] = JSON.parse(JSON.stringify(defaultData))
 
   let data = JSON.parse(JSON.stringify(db[token]))
   return data
 }
-
+*/
 function getByCategory (token, category) {
   return new Promise((res) => {
     let posts = getData(token)
