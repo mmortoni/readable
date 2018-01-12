@@ -59,6 +59,12 @@ export class PostsEdit extends React.Component {
   }
 
   render() {
+    const isUndefined = (typeof this.state.post === 'undefined')
+
+    let id    = isUndefined ? '' : this.state.post.id
+    let title = isUndefined ? '' : this.state.post.title
+    let body  = isUndefined ? '' : this.state.post.body
+
     return (
       <form onSubmit={this.handleSubmit.bind(this)} noValidate>
         <div className="form-group">
@@ -66,7 +72,7 @@ export class PostsEdit extends React.Component {
           <input
             type="text"
             className="form-control"
-            value={this.state.post.title}
+            value={ title }
             onChange={this.handleChange.bind(this, 'title')} />
         </div>
 
@@ -74,12 +80,12 @@ export class PostsEdit extends React.Component {
           <label className="label-control">Body</label>
           <Textarea
             className="form-control"
-            value={this.state.post.body}
+            value={ body }
             onChange={this.handleChange.bind(this, 'body')} />
         </div>
 
         <button type="submit" className="btn btn-default">
-          {this.state.postId ? 'Update' : 'Create' } Post
+          { isUndefined ? 'Create'  : 'Update' } Post
         </button>
       </form>
     );

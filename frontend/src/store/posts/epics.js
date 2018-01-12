@@ -49,6 +49,19 @@ export function sortPosts(action$) {
     .map(action =>  postsActions.sortSuccess(action.payload.props.posts, action.payload.props.params, action.payload.sortParams));
 }
 
+export function createPost(action$) {
+  return action$.ofType(actionTypes.POST_CREATE)
+    .map(action => action.payload)
+    .switchMap(post => {
+      return Observable.merge(
+        Observable.fromPromise(
+          instanceAxios.post(`/posts`, {title: post.title, body: post.body})
+        ).map(res => postsActions.createPostSuccess(res.data)),
+        Observable.of(push('/posts'))
+      );
+    });
+}
+
 export function updatePost(action$) {
   return action$.ofType(actionTypes.POST_UPDATE)
     .map(action => action.payload)
@@ -62,6 +75,16 @@ export function updatePost(action$) {
     });
 }
 
+export function deletePost(action$) {
+  return action$.ofType(actionTypes.POST_DELETE)
+    .map(action => action.payload)
+    .switchMap(post => {
+      return Observable.fromPromise(
+        instanceAxios.delete(`/posts/${post.id}`)
+      ).map(res => postsActions.deletePostSuccess(post));
+    });
+}
+
 export function votePost(action$) {
   return action$.ofType(actionTypes.POST_VOTE)
     .map(action => action.payload)
@@ -72,28 +95,5 @@ export function votePost(action$) {
         ).map(res => postsActions.votePostSuccess(res.data)),
         Observable.of(push('/posts'))
       );
-    });
-}
-
-export function createPost(action$) {
-  return action$.ofType(actionTypes.POST_CREATE)
-    .map(action => action.payload)
-    .switchMap(post => {
-      return Observable.merge(
-        Observable.fromPromise(
-          instanceAxios.post(`/posts`, post)
-        ).map(res => postsActions.createPostSuccess(res.data)),
-        Observable.of(push('/posts'))
-      );
-    });
-}
-
-export function deletePost(action$) {
-  return action$.ofType(actionTypes.POST_DELETE)
-    .map(action => action.payload)
-    .switchMap(post => {
-      return Observable.fromPromise(
-        instanceAxios.delete(`/posts/${post.id}`)
-      ).map(res => postsActions.deletePostSuccess(post));
     });
 }

@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+var objectId = require("node-time-uuid")
 
 const bodyParser = require('body-parser')
 
@@ -162,16 +163,35 @@ app.get('/', (req, res) => {
   })
 
   app.post('/posts', bodyParser.json(), (req, res) => {
-      posts.add(req.token, req.body)
-        .then(
-            (data) => res.send(data),
-            (error) => {
-                console.error(error)
-                res.status(500).send({
-                   error: 'There was an error.'
-            })
-          }
-        )
+    let id = new objectId()
+    let buffer = id.get().toString('base64')
+    let timestamp = parseInt(new Date().getTime()/1000, 10)
+
+    console.log(req.body)
+
+    let post = {
+        id: buffer.toLowerCase(),
+        timestamp: id.getTimestamp(),
+        title: req.body.title,
+        body: req.body.body,
+        author: 'author',
+        category: 'react',
+        comments : [],
+        voteScore: 0,
+        deleted: false,
+        commentCount: 0
+    }
+
+    posts.add(req.token, post)
+    .then(
+        (data) => res.send(data),
+        (error) => {
+            console.error(error)
+            res.status(500).send({
+                error: 'There was an error.'
+        })
+        }
+    )
   })
   
   app.get('/posts/:id', (req, res) => {

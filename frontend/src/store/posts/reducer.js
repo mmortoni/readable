@@ -18,6 +18,28 @@ export default (state = initialState, action) => {
         byId: action.payload.byId || {}
       })
     case actionTypes.POST_CREATE_SUCCESS:
+      newById =  [ {
+                    id: action.payload.id,
+                    timestamp: action.payload.timestamp,
+                    title: action.payload.title,
+                    body: action.payload.body,
+                    author: action.payload.author,
+                    category: action.payload.category,
+                    comments : action.payload.comments,
+                    voteScore: action.payload.voteScore,
+                    deleted: action.payload.deleted,
+                    commentCount: action.payload.commentCount
+                  },
+                  ...state.byId
+                ]
+
+      newById = _.orderBy(newById, state.sort.sortKey, state.sort.sortOrder)
+
+      return state.merge({
+        sort: state.sort || {},
+        params: state.params || {},
+        byId: newById || {}
+      })
     case actionTypes.POST_UPDATE_SUCCESS:
       newById =  state.byId.map(post =>
         post.id === action.payload.id

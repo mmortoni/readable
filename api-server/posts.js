@@ -123,11 +123,15 @@ function add (token, post) {
       body: post.body,
       author: post.author,
       category: post.category,
-      voteScore: 1,
+      comments : [],
+      voteScore: 1111,
       deleted: false,
       commentCount: 0
     }
 
+    posts.allIds.push(post.id)
+
+console.log(posts[post.id])
     res(posts[post.id])
   })
 }
