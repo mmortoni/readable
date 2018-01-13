@@ -116,7 +116,7 @@ function add (token, post) {
   return new Promise((res) => {
     let posts = getData(token)
 
-    posts[post.id] = {
+    posts.byId[post.id] = {
       id: post.id,
       timestamp: post.timestamp,
       title: post.title,
