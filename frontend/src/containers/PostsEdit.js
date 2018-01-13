@@ -26,10 +26,12 @@ export class PostsEdit extends React.Component {
   constructor(props, context) {
     super(props, context);
 
+    this.isUndefined = (typeof this.props.post === 'undefined')
+
     this.state = {
       ...this.state,
       postId: this.props.params.postId,
-      post: this.props.post // {title: '', body: ''}
+      post: this.isUndefined ? {title: '', body: ''} : this.props.post
     };
   }
 
@@ -59,11 +61,14 @@ export class PostsEdit extends React.Component {
   }
 
   render() {
-    const isUndefined = (typeof this.state.post === 'undefined')
+    let {
+      title,
+      body
+    } = this.state.post
 
-    let id    = isUndefined ? '' : this.state.post.id
-    let title = isUndefined ? '' : this.state.post.title
-    let body  = isUndefined ? '' : this.state.post.body
+    //let id    = this.isUndefined ? '' : this.state.post.id
+    //let title = this.isUndefined ? '' : this.state.post.title
+    //let body  = this.isUndefined ? '' : this.state.post.body
 
     return (
       <form onSubmit={this.handleSubmit.bind(this)} noValidate>
@@ -85,7 +90,7 @@ export class PostsEdit extends React.Component {
         </div>
 
         <button type="submit" className="btn btn-default">
-          { isUndefined ? 'Create'  : 'Update' } Post
+          { this.isUndefined ? 'Create'  : 'Update' } Post
         </button>
       </form>
     );

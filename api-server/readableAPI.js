@@ -167,8 +167,6 @@ app.get('/', (req, res) => {
     let buffer = id.get().toString('base64')
     let timestamp = parseInt(new Date().getTime()/1000, 10)
 
-    console.log(req.body)
-
     let post = {
         id: buffer.toLowerCase(),
         timestamp: id.getTimestamp(),
