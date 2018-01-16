@@ -14,16 +14,8 @@ export function fetchPosts(payload) {
   return {type: actionTypes.POST_FETCH_COLLECTION, payload};
 }
 
-export function fetchPostsSuccess(posts, params, sort) {
-  let byId = Object.assign({}, _(keyBy(posts[0], (post) => post.id))
-            .map(function(v, k) {
-              return _.merge({}, v, { key: k })
-            })
-            .value())
-
-  byId = _.orderBy(byId, sort.sortKey, sort.sortOrder)
-
-  return {type: actionTypes.POST_FETCH_COLLECTION_SUCCESS, payload: { byId, params, sort }};
+export function fetchPostsSuccess(payload) {
+  return {type: actionTypes.POST_FETCH_COLLECTION_SUCCESS, payload};
 }
 
 export function createPost(payload) {
@@ -62,14 +54,6 @@ export function sortPosts(payload) {
   return {type: actionTypes.POST_SORT, payload};
 }
 
-export function sortSuccess(posts, params, sort) {
-  let byId = Object.assign({}, _(keyBy(posts, (post) => post.id))
-            .map(function(v, k) {
-              return _.merge({}, v, { key: k })
-            })
-            .value())
-
-  byId = _.orderBy(byId, sort.sortKey, sort.sortOrder)
-
-  return {type: actionTypes.POST_SORT_SUCESS, payload: { byId, params, sort }};
+export function sortSuccess(payload) {
+  return {type: actionTypes.POST_SORT_SUCESS, payload};
 }

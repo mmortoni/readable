@@ -26,7 +26,6 @@ export class PostsIndex extends React.Component {
     super(props, context)
 
     this.classNames = 'glyphicon glyphicon-sort-by-alphabet'
-    this.sortParams = { sortDesc: false, sortKey: '', sortOrder: ['asc'] }
     this.deletePost = this.deletePost.bind(this)
     this.handleSearch = this.handleSearch.bind(this, 'title')
     this.onSortingChange = this.onSortingChange.bind(this)
@@ -48,7 +47,6 @@ export class PostsIndex extends React.Component {
 
   votePost(id, option){
     this.context.store.dispatch(postsActions.votePost({id: id, option: option}))
-    //                fetchAllPosts()
   }
     
   handleSearch(field, value) {
@@ -56,22 +54,21 @@ export class PostsIndex extends React.Component {
   }
 
   onSortingChange(value){
-    this.sortParams.sortKey = value
-    this.context.store.dispatch(postsActions.sortPosts({sortParams: this.sortParams, props: this.props}))
+    this.setState( (state) => update(sort, {sortKey: value}))
+    console.log(this.props.sort)
+    this.context.store.dispatch(postsActions.sortPosts({}))
   }
 
   handleClick(e) {
     e.preventDefault()
 
     if(e.target.value === 'DESC') {
-      this.sortParams.sortDesc = false
-      this.sortParams.sortOrder[0] = 'asc'
+      this.setState( (state) => update(sort, {sortDesc: false, sortOrder: ['asc']}))
       this.refs.refSpan.classList.remove('glyphicon-sort-by-alphabet-alt')
       this.refs.refSpan.classList.add('glyphicon-sort-by-alphabet')
       e.target.value = 'ASC'
     } else {
-      this.sortParams.sortDesc = true
-      this.sortParams.sortOrder[0] = 'desc'
+      this.setState( (state) => update(sort, {sortDesc: true, sortOrder: ['desc']}))
       this.refs.refSpan.classList.remove('glyphicon-sort-by-alphabet')
       this.refs.refSpan.classList.add('glyphicon-sort-by-alphabet-alt')
       e.target.value = 'DESC'
@@ -98,7 +95,7 @@ export class PostsIndex extends React.Component {
           <div className="col-md-4">
             Ordenar por:&nbsp;
             <select ref="refSelect"
-              value={sort.sortKey}
+              value={ sort.sortKey }
               onChange={e => this.onSortingChange(e.target.value)}
             >
               <option value="title">Título</option>

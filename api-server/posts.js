@@ -131,7 +131,6 @@ function add (token, post) {
 
     posts.allIds.push(post.id)
 
-console.log(posts[post.id])
     res(posts[post.id])
   })
 }

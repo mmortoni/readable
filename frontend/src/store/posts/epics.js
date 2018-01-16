@@ -1,4 +1,3 @@
-import { keyBy } from 'lodash';
 import axios from 'axios';
 import querystring from 'querystring';
 import { Observable } from 'rxjs/Observable';
@@ -40,13 +39,13 @@ export function fetchPosts(action$) {
     .switchMap(params => {
       return Observable.fromPromise(
         instanceAxios.get(`/posts?${ querystring.stringify(params) }`)
-      ).map(res => postsActions.fetchPostsSuccess(res.data, params, { sortDesc: false, sortKey: 'voteScore', sortOrder: ['asc'] }))
+      ).map(res => postsActions.fetchPostsSuccess(res.data))
     })
 }
 
 export function sortPosts(action$) {
   return action$.ofType(actionTypes.POST_SORT)
-    .map(action =>  postsActions.sortSuccess(action.payload.props.posts, action.payload.props.params, action.payload.sortParams));
+    .map(action =>  postsActions.sortSuccess(action.payload));
 }
 
 export function createPost(action$) {

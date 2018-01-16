@@ -1,10 +1,11 @@
+import { keyBy } from 'lodash';
 import Immutable from 'seamless-immutable'
 import * as actionTypes from './actionTypes'
 
 const initialState = Immutable({
   byId: {},
   params: {},
-  sort: {}
+  sort: { sortDesc: false, sortKey: 'voteScore', sortOrder: ['asc'] }
 })
 
 export default (state = initialState, action) => {
@@ -12,10 +13,18 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.POST_FETCH_ONE_SUCCESS:
     case actionTypes.POST_FETCH_COLLECTION_SUCCESS:
+      newById = Object.assign({}, _(keyBy(action.payload[0], (post) => post.id))
+        .map(function(v, k) {
+          return _.merge({}, v, { key: k })
+        })
+        .value())
+
+      newById = _.orderBy(newById, state.sort.sortKey, state.sort.sortOrder)
+
       return state.merge({
-        sort: action.payload.sort || {},
+        sort: state.sort || {},
         params: action.payload.params || {},
-        byId: action.payload.byId || {}
+        byId: newById || {}
       })
     case actionTypes.POST_CREATE_SUCCESS:
       newById =  [ {
@@ -72,10 +81,18 @@ export default (state = initialState, action) => {
     case actionTypes.POST_DELETE_SUCCESS:
       return state.set('byId', state.byId.without(action.payload.id));
     case actionTypes.POST_SORT_SUCESS:
+      newById = Object.assign({}, _(keyBy(state.byId, (post) => post.id))
+        .map(function(v, k) {
+          return _.merge({}, v, { key: k })
+        })
+        .value())
+
+      newById = _.orderBy(newById, state.sort.sortKey, state.sort.sortOrder)
+
       return state.merge({
         sort: action.payload.sort || {},
         params: action.payload.params || {},
-        byId: action.payload.byId || {}
+        byId: newById || {}
       })
     default:
       return state;
