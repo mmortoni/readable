@@ -87,11 +87,11 @@ export default (state = initialState, action) => {
         })
         .value())
 
-      newById = _.orderBy(newById, state.sort.sortKey, state.sort.sortOrder)
+      newById = _.orderBy(newById, action.payload.sort.sortKey, action.payload.sort.sortOrder)
 
       return state.merge({
         sort: action.payload.sort || {},
-        params: action.payload.params || {},
+        params: action.payload.props.params || {},
         byId: newById || {}
       })
     default:

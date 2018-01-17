@@ -25,12 +25,14 @@ export class PostsIndex extends React.Component {
   constructor(props, context) {
     super(props, context)
 
+    this.sortParams = { sortDesc: props.sort.sortDesc, sortKey: props.sort.sortKey, sortOrder: [] }
     this.classNames = 'glyphicon glyphicon-sort-by-alphabet'
     this.deletePost = this.deletePost.bind(this)
     this.handleSearch = this.handleSearch.bind(this, 'title')
     this.onSortingChange = this.onSortingChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.votePost = this.votePost.bind(this)
+    //this.forceUpdate()
   }
 
   componentDidMount() {
@@ -54,21 +56,20 @@ export class PostsIndex extends React.Component {
   }
 
   onSortingChange(value){
-    this.setState( (state) => update(sort, {sortKey: value}))
-    console.log(this.props.sort)
-    this.context.store.dispatch(postsActions.sortPosts({}))
+    this.sortParams.sortKey = value
+    this.context.store.dispatch(postsActions.sortPosts({ sort: this.sortParams, props: this.props }))
   }
 
   handleClick(e) {
     e.preventDefault()
+    this.sortParams.sortDesc =  !this.sortParams.sortDesc
+    this.sortParams.sortOrder[0] = (this.sortParams.sortDesc ? 'desc' : 'asc')
 
     if(e.target.value === 'DESC') {
-      this.setState( (state) => update(sort, {sortDesc: false, sortOrder: ['asc']}))
       this.refs.refSpan.classList.remove('glyphicon-sort-by-alphabet-alt')
       this.refs.refSpan.classList.add('glyphicon-sort-by-alphabet')
       e.target.value = 'ASC'
     } else {
-      this.setState( (state) => update(sort, {sortDesc: true, sortOrder: ['desc']}))
       this.refs.refSpan.classList.remove('glyphicon-sort-by-alphabet')
       this.refs.refSpan.classList.add('glyphicon-sort-by-alphabet-alt')
       e.target.value = 'DESC'
