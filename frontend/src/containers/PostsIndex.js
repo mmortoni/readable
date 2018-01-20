@@ -2,9 +2,11 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import { Link } from 'react-router';
+import { Modal,ModalManager,Effect } from 'react-dynamic-modal';
 import { PostsList } from '../components/posts/PostsList';
 import { SearchInput } from '../components/shared/SearchInput';
 import { postsActions, postsSelectors } from '../store/posts/index';
+import { AppModal } from '../components/shared/AppModal';
 
 @connect(
   (state) => {
@@ -28,11 +30,11 @@ export class PostsIndex extends React.Component {
     this.sortParams = { sortDesc: props.sort.sortDesc, sortKey: props.sort.sortKey, sortOrder: [] }
     this.classNames = 'glyphicon glyphicon-sort-by-alphabet'
     this.deletePost = this.deletePost.bind(this)
+    this.deletePostModal = this.deletePostModal.bind(this)
     this.handleSearch = this.handleSearch.bind(this, 'title')
     this.onSortingChange = this.onSortingChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.votePost = this.votePost.bind(this)
-    //this.forceUpdate()
   }
 
   componentDidMount() {
@@ -43,8 +45,36 @@ export class PostsIndex extends React.Component {
     this.context.store.dispatch(postsActions.fetchPosts(params))
   }
 
-  deletePost(post) {
-    this.context.store.dispatch(postsActions.deletePost(post))
+  deletePost(item, buttonValue){
+    // do not forget to bind getData in constructor
+    //this.context.store.dispatch(postsActions.deletePost(post))
+    console.log(item)
+    console.log(buttonValue);
+  }
+
+  deletePostModal(post) {
+    const effects = {
+      'FADE IN & SCALE' : Effect.ScaleUp,
+      'SLIDE IN (RIGHT)' : Effect.SlideFromRight,
+      'SLIDE IN (BOTTOM)' : Effect.SlideFromBottom,
+      'NEWSPAPER' : Effect.Newspaper,
+      'FALL' : Effect.Fall,
+      'SIDE FALL' : Effect.SideFall,
+      '3D FLIP (HORIZONTAL)' : Effect.FlipHorizontal3D,
+      '3D FLIP (VERTICAL)' : Effect.FlipVertical3D,
+      '3D SIGN' : Effect.Sign3D,
+      'SUPER SCALED' : Effect.SuperScaled,
+      '3D ROTATE BOTTOM' : Effect.RotateFromBottom3D,
+      '3D ROTATE LEFT' : Effect.RotateFromLeft3D,
+    }
+    
+    ModalManager.open(<AppModal
+                        title={ 'Delete Post' }
+                        content={ 'Tem certeza de que deseja excluir?' }
+                        detail={ post.title }
+                        callBackFunction={ this.deletePost }
+                        item={ post }
+                        effect={ effects['3D ROTATE LEFT'] }/>);
   }
 
   votePost(id, option){
@@ -119,7 +149,7 @@ export class PostsIndex extends React.Component {
           </div>
         </div>
         {posts.length > 0 &&
-        <PostsList posts={posts} onDelete={this.deletePost} onVotePost={this.votePost}/>}
+        <PostsList posts={posts} onDelete={this.deletePostModal} onVotePost={this.votePost}/>}
       </div>
     );
   }

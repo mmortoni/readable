@@ -157,8 +157,9 @@ function vote (token, id, option) {
 function disable (token, id) {
     return new Promise((res) => {
       let posts = getData(token)
-      posts[id].deleted = true
-      res(posts[id])
+      let post = posts.byId[id]
+      post.deleted = true
+      res(post)
     })
 }
 

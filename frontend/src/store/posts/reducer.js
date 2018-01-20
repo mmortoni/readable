@@ -79,7 +79,11 @@ export default (state = initialState, action) => {
         byId: newById || {}
       })
     case actionTypes.POST_DELETE_SUCCESS:
-      return state.set('byId', state.byId.without(action.payload.id));
+      return state.merge({
+        sort: state.sort || {},
+        params: state.params || {},
+        byId: state.byId.without(action.payload.id) || {}
+      })
     case actionTypes.POST_SORT_SUCESS:
       newById = Object.assign({}, _(keyBy(state.byId, (post) => post.id))
         .map(function(v, k) {
