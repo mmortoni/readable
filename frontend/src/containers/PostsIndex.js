@@ -46,10 +46,8 @@ export class PostsIndex extends React.Component {
   }
 
   deletePost(item, buttonValue){
-    // do not forget to bind getData in constructor
-    //this.context.store.dispatch(postsActions.deletePost(post))
-    console.log(item)
-    console.log(buttonValue);
+    if(buttonValue === 'ok')
+      this.context.store.dispatch(postsActions.deletePost(item))
   }
 
   deletePostModal(post) {

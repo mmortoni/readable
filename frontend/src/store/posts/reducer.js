@@ -1,4 +1,4 @@
-import { keyBy } from 'lodash';
+import { keyBy, without } from 'lodash';
 import Immutable from 'seamless-immutable'
 import * as actionTypes from './actionTypes'
 
@@ -79,10 +79,14 @@ export default (state = initialState, action) => {
         byId: newById || {}
       })
     case actionTypes.POST_DELETE_SUCCESS:
+      newById = state.byId.filter(function( post ) {
+        return post.id !== action.payload.id;
+      });
+
       return state.merge({
         sort: state.sort || {},
         params: state.params || {},
-        byId: state.byId.without(action.payload.id) || {}
+        byId: newById || {}
       })
     case actionTypes.POST_SORT_SUCESS:
       newById = Object.assign({}, _(keyBy(state.byId, (post) => post.id))
