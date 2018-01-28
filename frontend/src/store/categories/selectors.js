@@ -1,3 +1,3 @@
 export function getCategories(state) {
-  return Object.values(state.categoreisState.categoreisById);
+  return Object.values(state.categories.byId);
 }

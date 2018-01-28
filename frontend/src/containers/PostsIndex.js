@@ -109,8 +109,8 @@ export class PostsIndex extends React.Component {
   }
 
   render() {
-    const { sort, params, posts } = this.props
-
+    const { sort, params, posts} = this.props
+    
     return (
       <div>
         <div className="row">

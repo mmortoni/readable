@@ -1,4 +1,4 @@
-import { keyBy, without } from 'lodash';
+import { keyBy } from 'lodash';
 import Immutable from 'seamless-immutable'
 import * as actionTypes from './actionTypes'
 

@@ -37,7 +37,7 @@ export const PostsListRow = ({post, onDelete, onVotePost}) => {
       </td>
       <td>
         <div className="btn-toolbar pull-right">
-          <Link to={`/posts/${post.id}`} className="btn btn-primary btn-line">
+          <Link to={`/posts/${post.id}/edit`} className="btn btn-primary btn-line">
             <span className="glyphicon glyphicon-edit" aria-hidden="true"></span>
             <span><strong>Edit</strong></span>
           </Link>
