@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 import { isEqual } from 'lodash';
 import { categoriesActions, categoriesSelectors } from '../store/categories/index';
 
+// props
 @connect(
   (state, props) => {
     return {
       categories: categoriesSelectors.getCategories(state),
-      post: postsSelectors.getPost(state, props.params.postId),
     };
   }
 )
@@ -29,20 +29,18 @@ export class PostsNew extends React.Component {
     super(props, context);
     
     this.state = {
-      ...this.state,
-      // categories: this.isPostUndefined ? categoriesActions.getCategories() : null,
       post: { title: '', autor: '', category: '', body: '' },
     };
   }
 
   componentWillReceiveProps(nextProps) {
+    // refresh - do usuário ()
+    if(!this.props.categories)
+      this.context.store.dispatch(categoriesActions.fetchCategories(this.state))
+
     if (!isEqual(nextProps.post, this.state.post)) {
       this.setState({...this.state, post: nextProps.post});
     }
-  }
-
-  componentDidMount() {
-      this.context.store.dispatch(categoriesActions.fetchCategories(this.state))
   }
 
   handleChange(field, e) {
@@ -55,11 +53,16 @@ export class PostsNew extends React.Component {
   }
 
   render() {
-    let { title, autor, category, body } = this.state.post
-    let categories
+    let {title, autor, category, body} = this.state.post
 
-    if(this.state.categories)
-      categories = this.state.categories
+    let categories // props
+    if(this.props.categories){
+      categories = this.props.categories[0]
+      console.log(categories)
+
+    }
+
+
 
     return (
       <form onSubmit={ this.handleSubmit.bind(this) } noValidate>
@@ -68,7 +71,7 @@ export class PostsNew extends React.Component {
           <input
             type="text"
             className="form-control"
-            value={ title }
+            value={ post.title }
             onChange={ this.handleChange.bind(this, 'title') } />
         </div>
 
@@ -77,7 +80,7 @@ export class PostsNew extends React.Component {
           <input
             type="text"
             className="form-control"
-            value={ autor }
+            value={ post.autor }
             onChange={ this.handleChange.bind(this, 'autor') } />
         </div>
 
@@ -86,10 +89,9 @@ export class PostsNew extends React.Component {
           <select className="selectpicker" 
                   data-style="btn-info" 
                   id="selCategory" 
-                  value={ categories && this.state.post.category } 
                   onChange={ this.handleChange.bind(this, 'category') } >
-            { categories && this.state.post.categories.map( category =>
-                <option value={ category.name }>{ category.path }</option>
+            { categories && Object.keys(categories).map( key =>
+                <option key={ key } value={ categories[key].name }>{ categories[key].path }</option>
               )
             }
           </select>
@@ -99,7 +101,7 @@ export class PostsNew extends React.Component {
           <label className="label-control">Body</label>
           <Textarea
             className="form-control"
-            value={ body }
+            value={ post.body }
             onChange={this.handleChange.bind(this, 'body')} />
         </div>
 

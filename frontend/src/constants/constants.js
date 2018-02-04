@@ -1,33 +1,43 @@
-module.exports = Object.freeze({
-    BIGGREENDIALOG: {
-        backgroundColor: '#00897B',
-        color: '#ffffff',
-        width: '70%',
-        height: '600px',
-        marginTop: '-300px',
-        marginLeft: '-35%',
-    },    
-    SHELVES: [
-        {
-            id: 1,
-            code: 'read',
-            description: 'Read'
-        },
-        {
-            id: 2,
-            code: 'wantToRead',
-            description: 'Want To Read'
-        },
-        {
-            id: 3,
-            code: 'currentlyReading',
-            description: 'Reading'
-        }
-    ],
-    ACTION_TYPES: {
-        ADD_REPO_BEGIN: "ADD_REPO_BEGIN",
-        ADD_REPO_SUCCESS: "ADD_REPO_SUCCESS",
-        ADD_USER_BEGIN: "ADD_USER_BEGIN",
-        ADD_USER_SUCCESS: "ADD_USER_SUCCESS"
-    }
-  });
+import { Effect } from 'react-dynamic-modal';
+
+export const CATEGORY = {
+    CATEGORY_FETCH_ONE_SUCCESS: 'categories.CATEGORY_FETCH_ONE_SUCCESS',
+    CATEGORY_FETCH_SUCCESS: 'categories.CATEGORY_FETCH_SUCCESS',
+    CATEGORY_FETCH_COLLECTION: 'categories.CATEGORY_FETCH_COLLECTION',
+    CATEGORY_FETCH_COLLECTION_SUCCESS: 'categories.CATEGORY_FETCH_COLLECTION_SUCCESS',
+    CATEGORY_CREATE_SUCCESS: 'categories.CATEGORY_CREATE_SUCCESS',
+    CATEGORY_UPDATE_SUCCESS: 'categories.CATEGORY_UPDATE_SUCCESS',
+    CATEGORY_DELETE_SUCCESS: 'categories.CATEGORY_DELETE_SUCCESS'
+}
+
+export const POST = {
+    POST_FETCH_ONE: 'posts/POST_FETCH_ONE',
+    POST_FETCH_ONE_SUCCESS: 'posts/POST_FETCH_ONE_SUCCESS',
+    POST_FETCH_COLLECTION: 'posts/POST_FETCH_COLLECTION',
+    POST_FETCH_COLLECTION_SUCCESS: 'posts/POST_FETCH_COLLECTION_SUCCESS',
+    POST_CREATE: 'posts/CREATE_POST',
+    POST_CREATE_SUCCESS: 'posts/CREATE_POST_SUCCESS',
+    POST_UPDATE: 'posts/POST_UPDATE',
+    POST_UPDATE_SUCCESS: 'posts/POST_UPDATE_SUCCESS',
+    POST_DELETE: 'posts/POST_DELETE',
+    POST_DELETE_SUCCESS: 'posts/POST_DELETE_SUCCESS',
+    POST_VOTE: 'posts/POST_VOTE',
+    POST_VOTE_SUCCESS: 'posts/POST_VOTE_SUCCESS',
+    POST_SORT: 'posts/POST_SORT',
+    POST_SORT_SUCESS: 'posts/POST_SORT_SUCESS'
+}
+
+export const EFFECTS = {
+    'FADE IN & SCALE' : Effect.ScaleUp,
+    'SLIDE IN (RIGHT)' : Effect.SlideFromRight,
+    'SLIDE IN (BOTTOM)' : Effect.SlideFromBottom,
+    'NEWSPAPER' : Effect.Newspaper,
+    'FALL' : Effect.Fall,
+    'SIDE FALL' : Effect.SideFall,
+    '3D FLIP (HORIZONTAL)' : Effect.FlipHorizontal3D,
+    '3D FLIP (VERTICAL)' : Effect.FlipVertical3D,
+    '3D SIGN' : Effect.Sign3D,
+    'SUPER SCALED' : Effect.SuperScaled,
+    '3D ROTATE BOTTOM' : Effect.RotateFromBottom3D,
+    '3D ROTATE LEFT' : Effect.RotateFromLeft3D,
+  }

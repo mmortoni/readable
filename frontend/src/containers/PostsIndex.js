@@ -6,7 +6,7 @@ import { Modal,ModalManager,Effect } from 'react-dynamic-modal';
 import { PostsList } from '../components/posts/PostsList';
 import { SearchInput } from '../components/shared/SearchInput';
 import { postsActions, postsSelectors } from '../store/posts/index';
-import { AppModal } from '../components/shared/AppModal';
+import AppModal from '../components/shared/AppModal';
 
 @connect(
   (state) => {

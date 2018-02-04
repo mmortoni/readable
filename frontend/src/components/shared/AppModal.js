@@ -1,40 +1,31 @@
-//import 'babel-polyfill';
-import React,{ Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import { Modal,ModalManager,Effect } from 'react-dynamic-modal';
 
-export class AppModal extends Component{
-  constructor(props) {
-    super(props)
+const AppModal = props => {
+  const { title,content,detail,callBackFunction,item,effect } = props
 
-    this.closeModal = this.closeModal.bind(this)
+  const closeModal = (item, value) => {
+    if (callBackFunction)
+      callBackFunction(item, value)
   }
 
-  closeModal (item, value) {
-    if (this.props.callBackFunction)
-      this.props.callBackFunction(item, value);
-  }
+  return (
+    <Modal effect={ effect } onRequestClose={ () => true }>
+        <div className="modal-header">
+          <h4 className="modal-title">{ title }</h4>
+        </div>
 
-  render(){
-    const { title,content,detail,item,effect } = this.props;
+        <div className="modal-body">
+          <h4>{ content }</h4>
+          <p>{ detail }</p>
+        </div>
 
-    return (
-      <Modal effect={ effect } onRequestClose={ () => true }>
-          <div className="modal-header">
-            <h4 className="modal-title">{ title }</h4>
-          </div>
-
-          <div className="modal-body">
-            <h4>{ content }</h4>
-            <p>{ detail }</p>
-          </div>
-
-          <div className="modal-footer">
-            <button type="button" className="btn btn-default" onClick={ (event) => { ModalManager.close(); this.closeModal(item, 'cancel'); } }>Cancel</button>
-            <button type="button" className="btn btn-primary" onClick={ (event) => { ModalManager.close(); this.closeModal(item, 'ok'); } }>OK</button>
-          </div>
-      </Modal>
-    );
-  }
+        <div className="modal-footer">
+          <button type="button" className="btn btn-default" onClick={ (event) => { ModalManager.close(); closeModal(item, 'cancel'); } }>Cancel</button>
+          <button type="button" className="btn btn-primary" onClick={ (event) => { ModalManager.close(); closeModal(item, 'ok'); } }>OK</button>
+        </div>
+    </Modal>
+  )
 }
  
+export default AppModal
