@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 import Textarea from 'react-textarea-autosize';
 import { postsActions, postsSelectors } from '../store/posts/index';
 import { connect } from 'react-redux';
@@ -47,6 +48,7 @@ export class PostsEdit extends React.Component {
   handleSubmit() {
     if (this.state.postId) {
       this.context.store.dispatch(postsActions.updatePost(this.state.post));
+      browserHistory.push('/posts');
     }
   }
 

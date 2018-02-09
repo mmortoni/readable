@@ -39,5 +39,5 @@ export const EFFECTS = {
     '3D SIGN' : Effect.Sign3D,
     'SUPER SCALED' : Effect.SuperScaled,
     '3D ROTATE BOTTOM' : Effect.RotateFromBottom3D,
-    '3D ROTATE LEFT' : Effect.RotateFromLeft3D,
+    '3D ROTATE LEFT' : Effect.RotateFromLeft3D
   }

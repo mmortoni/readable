@@ -4,20 +4,23 @@ const config = require('./config')
 let db = {}
 
 const defaultData = {
-  categories: [
-      {
+    byId : {
+      "1":{
+        id: 1,
         name: 'react',
         path: 'react'
       },
-      {
+      "2":{
+        id: 2,
         name: 'redux',
         path: 'redux'
       },
-      {
+      "3":{
+        id: 3,
         name: 'udacity',
         path: 'udacity'
       }
-  ]
+    }
 }
 
 function getData (token) {

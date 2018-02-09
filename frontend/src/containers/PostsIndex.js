@@ -1,12 +1,14 @@
-import React from 'react';
-import { bindActionCreators } from 'redux';
+import React from 'react'
+import { browserHistory } from 'react-router'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Link } from 'react-router';
-import { Modal,ModalManager,Effect } from 'react-dynamic-modal';
-import { PostsList } from '../components/posts/PostsList';
-import { SearchInput } from '../components/shared/SearchInput';
-import { postsActions, postsSelectors } from '../store/posts/index';
-import AppModal from '../components/shared/AppModal';
+import { Link } from 'react-router'
+import { Modal,ModalManager,Effect } from 'react-dynamic-modal'
+import { PostsList } from '../components/posts/PostsList'
+import { SearchInput } from '../components/shared/SearchInput'
+import { postsActions, postsSelectors } from '../store/posts/index'
+import AppModal from '../components/shared/AppModal'
+import { EFFECTS } from '../constants/constants'
 
 @connect(
   (state) => {
@@ -51,32 +53,18 @@ export class PostsIndex extends React.Component {
   }
 
   deletePostModal(post) {
-    const effects = {
-      'FADE IN & SCALE' : Effect.ScaleUp,
-      'SLIDE IN (RIGHT)' : Effect.SlideFromRight,
-      'SLIDE IN (BOTTOM)' : Effect.SlideFromBottom,
-      'NEWSPAPER' : Effect.Newspaper,
-      'FALL' : Effect.Fall,
-      'SIDE FALL' : Effect.SideFall,
-      '3D FLIP (HORIZONTAL)' : Effect.FlipHorizontal3D,
-      '3D FLIP (VERTICAL)' : Effect.FlipVertical3D,
-      '3D SIGN' : Effect.Sign3D,
-      'SUPER SCALED' : Effect.SuperScaled,
-      '3D ROTATE BOTTOM' : Effect.RotateFromBottom3D,
-      '3D ROTATE LEFT' : Effect.RotateFromLeft3D,
-    }
-    
     ModalManager.open(<AppModal
                         title={ 'Delete Post' }
                         content={ 'Tem certeza de que deseja excluir?' }
                         detail={ post.title }
                         callBackFunction={ this.deletePost }
                         item={ post }
-                        effect={ effects['3D ROTATE LEFT'] }/>);
+                        effect={ EFFECTS['3D ROTATE LEFT'] } />);
   }
 
   votePost(id, option){
     this.context.store.dispatch(postsActions.votePost({id: id, option: option}))
+    browserHistory.push('/posts');
   }
     
   handleSearch(field, value) {

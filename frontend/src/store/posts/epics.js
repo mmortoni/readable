@@ -54,9 +54,8 @@ export function createPost(action$) {
     .switchMap(post => {
       return Observable.merge(
         Observable.fromPromise(
-          instanceAxios.post(`/posts`, {title: post.title, body: post.body})
-        ).map(res => postsActions.createPostSuccess(res.data)),
-        Observable.of(push('/posts'))
+          instanceAxios.post(`/posts`, {title: post.title, author: post.author, category: post.category, body: post.body})
+        ).map(res => postsActions.createPostSuccess(res.data))
       );
     });
 }
@@ -68,8 +67,7 @@ export function updatePost(action$) {
       return Observable.merge(
         Observable.fromPromise(
           instanceAxios.put(`/posts/${ post.id }`, {title: post.title, body: post.body})
-        ).map(res => postsActions.updatePostSuccess(res.data)),
-        Observable.of(push('/posts'))
+        ).map(res => postsActions.updatePostSuccess(res.data))
       );
     });
 }

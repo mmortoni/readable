@@ -10,7 +10,7 @@ import { Dashboard, PostsIndex, PostsEdit, PostsNew } from './containers/index';
 require('./app.scss');
 
 //const history = syncHistoryWithStore(hashHistory, store);
-const history = syncHistoryWithStore(browserHistory, store);
+const history = syncHistoryWithStore(browserHistory, store)
 
 let App = ({ children }) => {
   return (

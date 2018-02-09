@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
 
   switch (action.type) {
     case CATEGORY.CATEGORY_FETCH_COLLECTION_SUCCESS:
-      newById = Object.assign({}, _(keyBy(action.data, (category) => category.id))
+      newById = Object.assign({}, _(keyBy(action.data.byId, (category) => category.id))
       .map(function(v, k) {
         return _.merge({}, v, { key: k })
       })

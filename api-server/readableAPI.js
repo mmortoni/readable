@@ -165,15 +165,15 @@ app.get('/', (req, res) => {
   app.post('/posts', bodyParser.json(), (req, res) => {
     let id = new objectId()
     let buffer = id.get().toString('base64')
-    let timestamp = parseInt(new Date().getTime()/1000, 10)
+    let timestamp = Math.floor(Date.now())
 
     let post = {
         id: buffer.toLowerCase(),
-        timestamp: id.getTimestamp(),
+        timestamp: timestamp,
         title: req.body.title,
         body: req.body.body,
-        author: 'author',
-        category: 'react',
+        author: req.body.author,
+        category: req.body.category,
         comments : [],
         voteScore: 0,
         deleted: false,

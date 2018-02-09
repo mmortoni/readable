@@ -17,7 +17,7 @@ const AppModal = props => {
 
         <div className="modal-body">
           <h4>{ content }</h4>
-          <p>{ detail }</p>
+          <h3 className="text-danger">{ detail }</h3>
         </div>
 
         <div className="modal-footer">

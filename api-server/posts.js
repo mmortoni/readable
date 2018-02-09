@@ -51,15 +51,7 @@ function getData (token) {
   }
   return data
 }
-/*
-function getData (token) {
-  if(!db[token])
-    db[token] = JSON.parse(JSON.stringify(defaultData))
 
-  let data = JSON.parse(JSON.stringify(db[token]))
-  return data
-}
-*/
 function getByCategory (token, category) {
   return new Promise((res) => {
     let posts = getData(token)
@@ -124,7 +116,7 @@ function add (token, post) {
       author: post.author,
       category: post.category,
       comments : [],
-      voteScore: 1111,
+      voteScore: 0,
       deleted: false,
       commentCount: 0
     }

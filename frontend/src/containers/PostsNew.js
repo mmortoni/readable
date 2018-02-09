@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 import Textarea from 'react-textarea-autosize';
 import { postsActions, postsSelectors } from '../store/posts/index';
 import { connect } from 'react-redux';
@@ -26,17 +27,19 @@ export class PostsNew extends React.Component {
   };
 
   constructor(props, context) {
-    super(props, context);
-    
+    super(props, context)
+
     this.state = {
-      post: { title: '', autor: '', category: '', body: '' },
-    };
+      post: { title: '', author: '', category: '', body: '' }
+    }
+
+    this.context.store.dispatch(categoriesActions.fetchCategories(this.state))
   }
 
   componentWillReceiveProps(nextProps) {
     // refresh - do usuário ()
     if(!this.props.categories)
-      this.context.store.dispatch(categoriesActions.fetchCategories(this.state))
+      //this.context.store.dispatch(categoriesActions.fetchCategories(this.state))
 
     if (!isEqual(nextProps.post, this.state.post)) {
       this.setState({...this.state, post: nextProps.post});
@@ -50,19 +53,16 @@ export class PostsNew extends React.Component {
 
   handleSubmit() {
     this.context.store.dispatch(postsActions.createPost(this.state.post));
+    browserHistory.push('/posts');
   }
 
   render() {
-    let {title, autor, category, body} = this.state.post
+    let {title, author, category, body} = this.state.post
 
-    let categories // props
+    let categories
     if(this.props.categories){
-      categories = this.props.categories[0]
-      console.log(categories)
-
+      categories = this.props.categories
     }
-
-
 
     return (
       <form onSubmit={ this.handleSubmit.bind(this) } noValidate>
@@ -71,7 +71,7 @@ export class PostsNew extends React.Component {
           <input
             type="text"
             className="form-control"
-            value={ post.title }
+            value={ title }
             onChange={ this.handleChange.bind(this, 'title') } />
         </div>
 
@@ -80,8 +80,8 @@ export class PostsNew extends React.Component {
           <input
             type="text"
             className="form-control"
-            value={ post.autor }
-            onChange={ this.handleChange.bind(this, 'autor') } />
+            value={ author }
+            onChange={ this.handleChange.bind(this, 'author') } />
         </div>
 
         <div className="form-group">
@@ -90,8 +90,8 @@ export class PostsNew extends React.Component {
                   data-style="btn-info" 
                   id="selCategory" 
                   onChange={ this.handleChange.bind(this, 'category') } >
-            { categories && Object.keys(categories).map( key =>
-                <option key={ key } value={ categories[key].name }>{ categories[key].path }</option>
+            { categories && Object.keys(categories).map( (key) =>
+                <option key={ categories[key].id.toString() } value={ categories[key].name }>{ categories[key].path }</option>
               )
             }
           </select>
@@ -101,7 +101,7 @@ export class PostsNew extends React.Component {
           <label className="label-control">Body</label>
           <Textarea
             className="form-control"
-            value={ post.body }
+            value={ body }
             onChange={this.handleChange.bind(this, 'body')} />
         </div>
 
