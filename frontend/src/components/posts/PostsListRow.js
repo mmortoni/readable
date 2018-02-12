@@ -15,7 +15,7 @@ export const PostsListRow = ({post, onDelete, onVotePost}) => {
       <td>
         <div className="post">
           <div className="post-description">
-            <Link to={`/${post.category}/${post.id}`}>
+            <Link to={`/posts/${post.id}/comment`}>
               <div className="post-title"><h3>{post.title}</h3></div>
             </Link>
             <div className="post-body"><p>{post.body}</p></div>
