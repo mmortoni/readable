@@ -1,7 +1,6 @@
 import axios from 'axios';
 import querystring from 'querystring';
 import { Observable } from 'rxjs/Observable';
-import { push } from 'react-router-redux';
 
 import { POST } from '../../constants/constants'
 import * as postsActions from './actionCreators';
@@ -89,8 +88,7 @@ export function votePost(action$) {
         return Observable.merge(
         Observable.fromPromise(
           instanceAxios.post(`/posts/${ payload.id }`, {option: payload.option})
-        ).map(res => postsActions.votePostSuccess(res.data)),
-        Observable.of(push('/posts'))
+        ).map(res => postsActions.votePostSuccess(res.data))
       );
     });
 }

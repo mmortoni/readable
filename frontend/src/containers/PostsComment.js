@@ -5,7 +5,9 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Modal,ModalManager,Effect } from 'react-dynamic-modal'
 import { CommentsList } from '../components/comments/CommentsList'
-import { postsActions, postsSelectors } from '../store/posts/index'
+import { postsSelectors } from '../store/posts/index'
+import { commentsActions, commentsSelectors } from '../store/comments/index'
+
 import AppModal from '../components/shared/AppModal'
 import { EFFECTS } from '../constants/constants'
 
@@ -15,7 +17,6 @@ import { formatTimestamp } from '../utils/Utils'
   (state, props) => {
     return {
       post: postsSelectors.getPost(state, props.params.postId),
-      //posts: postsSelectors.getPosts(state),
     };
   }
 )
@@ -43,45 +44,32 @@ export class PostsComment extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchPosts({})
+    this.context.store.dispatch(commentsActions.fetchComments(this.props.params.postId))
   }
 
-  fetchPosts(params) {
-    this.context.store.dispatch(postsActions.fetchPosts(params))
-  }
-
-  deletePost(item, buttonValue){
+  deleteComment(item, buttonValue){
     if(buttonValue === 'ok')
-      this.context.store.dispatch(postsActions.deletePost(item))
+      this.context.store.dispatch(commentsActions.deleteComment(item))
   }
 
-  deleteCommentModal(post) {
+  deleteCommentModal(comment) {
     ModalManager.open(<AppModal
-                        title={ 'Delete Post' }
+                        title={ 'Delete Comment' }
                         content={ 'Tem certeza de que deseja excluir?' }
-                        detail={ post.title }
-                        callBackFunction={ this.deletePost }
-                        item={ post }
+                        detail={ comment.title }
+                        callBackFunction={ this.deleteComment }
+                        item={ comment }
                         effect={ EFFECTS['3D ROTATE LEFT'] } />);
   }
 
-  votePost(id, option){
-    this.context.store.dispatch(postsActions.votePost({id: id, option: option}))
-    browserHistory.push('/posts');
+  voteComment(id, option){
+    this.context.store.dispatch(commentsActions.voteComment({id: id, option: option}))
+    // browserHistory.push('/posts');
   }
     
-  handleSearch(field, value) {
-    this.fetchPosts({q: value, field: field})
-  }
-
-  onSortingChange(value){
-    this.sortParams.sortKey = value
-    this.context.store.dispatch(postsActions.sortPosts({ sort: this.sortParams, props: this.props }))
-  }
-
   render() {
     const post = this.props.post
-    const postId = this.props.params.postId
+    const comments = this.props.comments || {}
 
     return (
       <div>
@@ -99,7 +87,9 @@ export class PostsComment extends React.Component {
                   { post.voteScore } votes { post.comments && post.comments.length > 0 ? post.comments.length : 0 } comments
                 </div>
               </div>
+
               <br/>
+
               <div>
                 <div className="post-author"><p><b>Category: </b> { post.category }</p></div>
                 <div className="post-author"><p><b>Author: </b> { post.author }</p></div>
@@ -107,7 +97,7 @@ export class PostsComment extends React.Component {
               </div>          
             </div>
 
-            
+            {comments.length > 0 && <CommentsList comments={comments} onDelete={this.deleteCommentModal} onVoteComment={this.voteComment}/>}            
           </div>
         </div>
       </div>

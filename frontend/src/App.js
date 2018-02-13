@@ -12,38 +12,19 @@ require('./app.scss');
 const history = syncHistoryWithStore(browserHistory, store)
 
 let App = ({ children }) => {
-  var activeKey = 0;
-  let array_of_li =  document.querySelectorAll("ul.navbar-nav li");
-
-  if (document.location.pathname.indexOf("posts") != -1) {
-    activeKey = 1;
-  }
-
-  if (document.location.pathname.lastIndexOf("comment") != -1) {
-    activeKey = 2;
-  }
-
-  if(array_of_li.length > 0) {
-    for (let i = 0; i < array_of_li.length; i++) {
-      if(i == activeKey)
-        array_of_li[i].classList.add( 'active' );
-      else
-        array_of_li[i].classList.remove( 'active' );
-    }
-  }
 
   return (
     <div>
       <Navbar>
         <Nav>
-          <IndexLinkContainer to="/" activeKey={activeKey}>
-            <NavItem eventKey={0}>Dashboard</NavItem>
+          <IndexLinkContainer to="/">
+            <NavItem>Dashboard</NavItem>
           </IndexLinkContainer>
-          <LinkContainer to="/posts" activeKey={activeKey}>
-            <NavItem eventKey={1}>Posts</NavItem>
+          <LinkContainer to="/posts">
+            <NavItem>Posts</NavItem>
           </LinkContainer>
-          <LinkContainer to="/posts/0/comment" activeKey={activeKey}>
-            <NavItem eventKey={2}>Comments</NavItem>
+          <LinkContainer to="">
+            <NavItem disabled={true}>Comments</NavItem>
           </LinkContainer>
         </Nav>
       </Navbar>
