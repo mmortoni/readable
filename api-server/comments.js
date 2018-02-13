@@ -24,7 +24,7 @@ const defaultData = {
       voteScore: -5,
       deleted: false,
       parentDeleted: false
-    }
+    }    
   },
   allIds : ['894tuq4ut84ut8v4t8wun89g','8tu4bsun805n8un48ve89']
 }
@@ -40,9 +40,8 @@ function getData (token) {
 function getByParent (token, parentId) {
   return new Promise((res) => {
     let comments = getData(token)
-    let keys = Object.keys(comments)
-    let filtered_keys = keys.filter(key => comments[key].parentId === parentId && !comments[key].deleted)
-    res(filtered_keys.map(key => comments[key]))
+    let filtered_keys = Object.keys(comments['byId']).filter(key => comments['byId'][key].parentId === parentId && !comments['byId'][key].deleted)
+    res(filtered_keys.map(key => comments['byId'][key]))
   })
 }
 

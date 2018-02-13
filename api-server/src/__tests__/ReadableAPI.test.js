@@ -144,13 +144,14 @@ describe('Testes Udacity Readable API', () => {
         })
     });
 
-    it('GET /posts/:id/comments ==> Obter todos os comentários para uma única publicação.', done => {
+   it('GET /posts/:id/comments ==> Obter todos os comentários para uma única publicação.', done => {
         readableAPI
         .get('/posts/8xf0y6ziyjabvozdd253nd/comments')
         .set(headers)
         .expect(200)
         .then(res => {
             expect(res.body).toBeInstanceOf(Array);
+            expect(res.body).toHaveLength(2);
             done();
         })
     });

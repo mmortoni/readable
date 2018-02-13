@@ -1,8 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
 
-import ThumbsUp from '../../images/thumbs-up.png'
-import ThumbsDown from '../../images/thumbs-down.png'
 import { formatTimestamp } from '../../utils/Utils'
 
 export const CommentsListRow = ({comment, onDelete, onVoteComment}) => {
@@ -17,8 +15,11 @@ export const CommentsListRow = ({comment, onDelete, onVoteComment}) => {
           <div className="post-description">
             <div className="post-body"><p>{comment.body}</p></div>
             <div className="post-likes">
-              <img src={ThumbsUp} width="28" height="28" onClick={onVoteComment.bind(this, comment.id, "upVote")} />
-              <img src={ThumbsDown} width="28" height="28" onClick={onVoteComment.bind(this, comment.id, "downVote")} />
+              <img src='/images/thumbs-up.png' width="28" height="28" onClick={onVoteComment.bind(this, comment.id, "upVote")} />
+              <img src='/images/thumbs-down.png' width="28" height="28" onClick={onVoteComment.bind(this, comment.id, "downVote")} />
+            </div>
+            <div className="post-likes-comments">
+              {comment.voteScore} votes
             </div>
           </div>
           <br/>

@@ -17,6 +17,7 @@ import { formatTimestamp } from '../utils/Utils'
   (state, props) => {
     return {
       post: postsSelectors.getPost(state, props.params.postId),
+      comments: commentsSelectors.getComments(state),
     };
   }
 )
@@ -34,17 +35,10 @@ export class PostsComment extends React.Component {
 
   constructor(props, context) {
     super(props, context);
-/*
-    this.state = {
-      ...this.state,
-      postId: this.props.params.postId,
-      post: this.props.post
-    };
-  */
   }
 
   componentDidMount() {
-    this.context.store.dispatch(commentsActions.fetchComments(this.props.params.postId))
+    this.context.store.dispatch(commentsActions.fetchComments({post:this.props.post, postId: this.props.params.postId}))
   }
 
   deleteComment(item, buttonValue){
@@ -68,12 +62,14 @@ export class PostsComment extends React.Component {
   }
     
   render() {
-    const post = this.props.post
-    const comments = this.props.comments || {}
+    const {comments, post} = this.props
 
     return (
       <div>
         <div className="row">
+          <div className="col-md-4 col-md-offset-4"><h4>POST</h4></div>
+
+          <div className="col-md-2"></div>
           <div className="col-md-10">
             <div className="post">
               <div className="post-description">
