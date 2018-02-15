@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Modal,ModalManager,Effect } from 'react-dynamic-modal'
 import { CommentsList } from '../components/comments/CommentsList'
-import { postsSelectors } from '../store/posts/index'
+import { postsActions, postsSelectors } from '../store/posts/index'
 import { commentsActions, commentsSelectors } from '../store/comments/index'
 
 import AppModal from '../components/shared/AppModal'
@@ -60,10 +60,15 @@ export class PostsComment extends React.Component {
     this.context.store.dispatch(commentsActions.voteComment({id: id, option: option}))
     // browserHistory.push('/posts');
   }
-    
+
+  votePost(id, option) {
+    this.context.store.dispatch(postsActions.votePost({id: id, option: option}))
+    //browserHistory.push('/posts');
+  }
+
   render() {
     const {comments, post} = this.props
-
+  
     return (
       <div>
         <div className="row">
@@ -76,8 +81,8 @@ export class PostsComment extends React.Component {
                 <div className="post-title"><h3>{post.title}</h3></div>
                 <div className="post-body"><p>{ post.body }</p></div>
                 <div className="post-likes">
-                  <img src='/images/thumbs-up.png' width="28" height="28" />
-                  <img src='/images/thumbs-down.png' width="28" height="28" />
+                  <img src="/images/thumbs-up.png" width="28" height="28" onClick={ this.votePost.bind(this, post.id, "upVote") } />
+                  <img src="/images/thumbs-down.png" width="28" height="28" onClick={ this.votePost.bind(this, post.id, "downVote") } />
                 </div>
                 <div className="post-likes-comments">
                   { post.voteScore } votes { post.comments && post.comments.length > 0 ? post.comments.length : 0 } comments

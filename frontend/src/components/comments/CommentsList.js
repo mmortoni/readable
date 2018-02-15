@@ -6,7 +6,7 @@ export const CommentsList = ({comments, onDelete, onVoteComment}) => {
     <table className="table table-hover">
       <thead>
       <tr>
-        <th colSpan={2}>COMMENTS</th>
+        <th colSpan={2}>12 comments:</th>
       </tr>
       </thead>
       <tbody>
