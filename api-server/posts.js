@@ -73,34 +73,36 @@ function get (token, id) {
 }
 
 function getAll (token,q,field) {
+
   return new Promise((res) => {
     const posts = getData(token)
+    let result  = [];
 
-    let filtered_keys = Object.keys(posts['byId']).filter(key => !posts['byId'][key].deleted)
+    result.push( Object.keys(posts['byId'])
+      .filter(keyF => !posts['byId'][keyF].deleted)
+      .map(keyM => posts['byId'][keyM])
+    )
 
     if(typeof q !== "undefined" && field !== "undefined") {
       q = q.toLowerCase()
-      filtered_keys = filtered_keys.filter(key => {
-          let result = false
+
+      result[0] = result[0].filter(post => {
+          let fieldMatch = false
           if(Array.isArray(field)){
-            result = field.some(f => posts['byId'][key][f].toLowerCase().indexOf(q) !== -1)
+            fieldMatch = field.some(f => post[f].toLowerCase().indexOf(q) !== -1)
           } else {
-            result = posts['byId'][key][field].toLowerCase().indexOf(q) !== -1
+            fieldMatch = post[field].toLowerCase().indexOf(q) !== -1
           }
-          return result
+
+          return fieldMatch
         }
       )
+      .map(post => post)
     }
 
-    for(let key in posts['byId']) {
-      if(filtered_keys.indexOf(key) === -1)
-        delete posts['byId'][key]
-    }
+    result.push(result[0].map(post => post.id))
 
-    posts['allIds'] = filtered_keys
-
-    filtered_keys = Object.keys(posts)
-    res(filtered_keys.map(key => posts[key]))
+    res( result )
   })
 }
 

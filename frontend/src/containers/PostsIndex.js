@@ -64,11 +64,16 @@ export class PostsIndex extends React.Component {
 
   votePost(id, option){
     this.context.store.dispatch(postsActions.votePost({id: id, option: option}))
-    browserHistory.push('/posts');
+    // 16/02/2018 - browserHistory.push('/posts');
   }
     
   handleSearch(field, value) {
-    this.fetchPosts({q: value, field: field})
+    let p = {}
+
+    if(value !== null && value.trim().length > 0) 
+      p = {q: value.trim(), field: field}
+
+    this.fetchPosts(p)
   }
 
   onSortingChange(value){
