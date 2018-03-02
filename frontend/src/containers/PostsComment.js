@@ -74,7 +74,6 @@ export class PostsComment extends React.Component {
         <div className="row">
           <div className="col-md-4 col-md-offset-4"><h4>POST</h4></div>
 
-          <div className="col-md-2"></div>
           <div className="col-md-10">
             <div className="post">
               <div className="post-description">
@@ -99,6 +98,13 @@ export class PostsComment extends React.Component {
             </div>
 
             {comments.length > 0 && <CommentsList comments={comments} onDelete={this.deleteCommentModal} onVoteComment={this.voteComment}/>}            
+          </div>
+
+          <div className="col-md-2 text-right">
+            <Link to="/posts/new" className="btn btn-primary a-btn-slide-text">
+              <span style={{class: this.classNames}} aria-hidden="true"></span>
+              <span><strong>Novo Comment</strong></span>
+            </Link>
           </div>
         </div>
       </div>

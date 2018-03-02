@@ -5,7 +5,7 @@ import { Route, IndexRoute, Router, hashHistory, browserHistory  } from 'react-r
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import store from './store';
-import { Dashboard, PostsIndex, PostsEdit, PostsNew, PostsComment } from './containers/index';
+import { PostsIndex, PostsEdit, PostsNew, PostsComment } from './containers/index';
 
 require('./app.scss');
 
@@ -18,11 +18,8 @@ let App = ({ children }) => {
       <Navbar>
         <Nav>
           <IndexLinkContainer to="/">
-            <NavItem>Dashboard</NavItem>
-          </IndexLinkContainer>
-          <LinkContainer to="/posts">
             <NavItem>Posts</NavItem>
-          </LinkContainer>
+          </IndexLinkContainer>
           <LinkContainer to="">
             <NavItem disabled={true}>Comments</NavItem>
           </LinkContainer>
@@ -40,8 +37,7 @@ export default () => {
     <Provider store={store}>
       <Router history={history}>
         <Route path="/" component={ App }>
-          <IndexRoute component={ Dashboard } />
-          <Route path="/posts" component={ PostsIndex } />
+          <IndexRoute path="/" component={ PostsIndex } />
           <Route path="/posts/new" component={ PostsNew } />
           <Route path="/posts/:postId/edit" component={ PostsEdit } />
           <Route path="/posts/:postId/comment" component={ PostsComment } />
