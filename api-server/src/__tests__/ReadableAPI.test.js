@@ -185,6 +185,7 @@ describe('Testes Udacity Readable API', () => {
             done();
         })
     });
+    
 /*
     it('GET /comments/:id       ==> Obter os detalhes para um único comentário.', done => {
         readableAPI
