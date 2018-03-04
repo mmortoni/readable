@@ -1,26 +1,8 @@
-import axios from 'axios';
 import querystring from 'querystring';
 import { Observable } from 'rxjs/Observable';
 
 import { COMMENT } from '../../constants/constants'
 import * as commentsActions from './actionCreators';
-
-let token = localStorage.token;
-
-if (!token)
-token = localStorage.token = Math.random()
-                                .toString(36)
-                                .substr(-8);
-
-const instanceAxios = axios.create({
-  baseURL: process.env.REACT_APP_READABLE_API || 'http://localhost:3030',
-  timeout: 5000,
-  headers: {
-    'Accept': 'application/json',
-    'Authorization': token,
-    'Content-Type': 'application/json'
-  }
-})
 
 export function fetchComment(action$) {
   return action$.ofType(COMMENT.COMMENT_FETCH_ONE)
@@ -37,8 +19,8 @@ export function fetchComments(action$) {
     .map(action => action.payload)
     .switchMap(payload => {
       return Observable.fromPromise(
-        instanceAxios.get(`/posts/${ payload.postId }/comments`)
-      ).map(res => commentsActions.fetchCommentsSuccess({post:payload.post, comments:res.data}))
+        instanceAxios.get(`/posts/${ payload.commentId }/comments`)
+      ).map(res => commentsActions.fetchCommentsSuccess({comment:payload.comment, comments:res.data}))
     })
 }
 
@@ -50,11 +32,11 @@ export function sortComments(action$) {
 export function createComment(action$) {
   return action$.ofType(COMMENT.COMMENT_CREATE)
     .map(action => action.payload)
-    .switchMap(post => {
+    .switchMap(comment => {
       return Observable.merge(
         Observable.fromPromise(
-          instanceAxios.post(`/comments`, {title: post.title, author: post.author, category: post.category, body: post.body})
-        ).map(res => commentsActions.createcommentsuccess(res.data))
+          instanceAxios.post(`/comments`, { author: comment.author, body: comment.body, parentId: comment.postId })
+        ).map(res => commentsActions.createCommentSuccess(res.data))
       );
     });
 }
@@ -62,10 +44,10 @@ export function createComment(action$) {
 export function updateComment(action$) {
   return action$.ofType(COMMENT.COMMENT_UPDATE)
     .map(action => action.payload)
-    .switchMap(post => {
+    .switchMap(comment => {
       return Observable.merge(
         Observable.fromPromise(
-          instanceAxios.put(`/comments/${ post.id }`, {title: post.title, body: post.body})
+          instanceAxios.put(`/comments/${ comment.id }`, {author: comment.author, body: comment.body})
         ).map(res => commentsActions.updatecommentsuccess(res.data))
       );
     });
@@ -74,7 +56,7 @@ export function updateComment(action$) {
 export function deleteComment(action$) {
   return action$.ofType(COMMENT.COMMENT_DELETE)
     .map(action => action.payload)
-    .switchMap(post => {
+    .switchMap(comment => {
       return Observable.fromPromise(
         instanceAxios.delete(`/comments/${comment.id}`)
       ).map(res => commentsActions.deletecommentsuccess(comment));

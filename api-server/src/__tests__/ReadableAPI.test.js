@@ -16,7 +16,7 @@ const headers = {
 
 describe('Testes Udacity Readable API', () => {
     var categorias;
-
+/*
     it('GET /                   ==> Retorno text/html; charset=utf-8.', done => {
         readableAPI
             .get('/')
@@ -155,11 +155,14 @@ describe('Testes Udacity Readable API', () => {
             done();
         })
     });
+*/
+    var id = new objectId();
+    var buffer = id.get().toString('base64');
+    var timestamp = parseInt(new Date().getTime()/1000, 10);
+ //   buffer = id.get().toString('base64');
+ //   timestamp = parseInt(new Date().getTime()/1000, 10);
 
-    buffer = id.get().toString('base64');
-    timestamp = parseInt(new Date().getTime()/1000, 10);
-
-    let comments = {
+    let comment = {
         id: buffer.toLowerCase(),
         parentId: "8xf0y6ziyjabvozdd253nds",
         timestamp: timestamp,
@@ -169,19 +172,20 @@ describe('Testes Udacity Readable API', () => {
         deleted: false,
         parentDeleted: false
     }; 
-
+ 
     it('POST /comments          ==> Adicionar um comentário a uma publicação.', done => {
         readableAPI
         .post('/comments')
-        .send(comments)
+        .send(comment)
         .set(headers)
         .expect(200)
         .then(res => {
-            expect(res.body.id).toEqual(comments.id);
+            console.log('res.body.id==>' + res.body.id);
+            expect(res.body.id).toEqual(comment.id);
             done();
         })
     });
-
+/*
     it('GET /comments/:id       ==> Obter os detalhes para um único comentário.', done => {
         readableAPI
         .get(`/comments/${comments.id}`)
@@ -216,4 +220,5 @@ describe('Testes Udacity Readable API', () => {
             done();
         })
     });
+*/
 });

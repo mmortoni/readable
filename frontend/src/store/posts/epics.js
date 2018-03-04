@@ -1,26 +1,8 @@
-import axios from 'axios';
 import querystring from 'querystring';
 import { Observable } from 'rxjs/Observable';
 
 import { POST } from '../../constants/constants'
 import * as postsActions from './actionCreators';
-
-let token = localStorage.token;
-
-if (!token)
-token = localStorage.token = Math.random()
-                                .toString(36)
-                                .substr(-8);
-
-const instanceAxios = axios.create({
-  baseURL: process.env.REACT_APP_READABLE_API || 'http://localhost:3030',
-  timeout: 5000,
-  headers: {
-    'Accept': 'application/json',
-    'Authorization': token,
-    'Content-Type': 'application/json'
-  }
-})
 
 export function fetchPost(action$) {
   return action$.ofType(POST.POST_FETCH_ONE)

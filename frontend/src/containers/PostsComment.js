@@ -58,12 +58,10 @@ export class PostsComment extends React.Component {
 
   voteComment(id, option){
     this.context.store.dispatch(commentsActions.voteComment({id: id, option: option}))
-    // browserHistory.push('/posts');
   }
 
   votePost(id, option) {
     this.context.store.dispatch(postsActions.votePost({id: id, option: option}))
-    //browserHistory.push('/posts');
   }
 
   render() {
@@ -101,7 +99,7 @@ export class PostsComment extends React.Component {
           </div>
 
           <div className="col-md-2 text-right">
-            <Link to="/posts/new" className="btn btn-primary a-btn-slide-text">
+            <Link to={`/posts/${post.id}/comment/new`} className="btn btn-primary a-btn-slide-text">
               <span style={{class: this.classNames}} aria-hidden="true"></span>
               <span><strong>Novo Comment</strong></span>
             </Link>

@@ -1,21 +1,11 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import Textarea from 'react-textarea-autosize';
-import { postsActions, postsSelectors } from '../store/posts/index';
+import { commentsActions, commentsSelectors } from '../store/comments/index';
 import { connect } from 'react-redux';
 import { isEqual } from 'lodash';
-import { categoriesActions, categoriesSelectors } from '../store/categories/index';
 
-// props
-@connect(
-  (state, props) => {
-    return {
-      categories: categoriesSelectors.getCategories(state),
-    };
-  }
-)
-
-export class PostsNew extends React.Component {
+export class PostsCommentNew extends React.Component {
   static contextTypes = {
     router: React.PropTypes.object,
     store: React.PropTypes.object
@@ -30,51 +20,32 @@ export class PostsNew extends React.Component {
     super(props, context)
 
     this.state = {
-      post: { title: '', author: '', category: '', body: '' }
+      postId: this.props.params.postId,
+      comment: { author: '', body: '' }
     }
-
-    this.context.store.dispatch(categoriesActions.fetchCategories(this.state))
   }
 
   componentWillReceiveProps(nextProps) {
-    // refresh - do usuário ()
-    if(!this.props.categories)
-      //this.context.store.dispatch(categoriesActions.fetchCategories(this.state))
-
-    if (!isEqual(nextProps.post, this.state.post)) {
+    if (!isEqual(nextProps.post, this.state.comment)) {
       this.setState({...this.state, post: nextProps.post});
     }
   }
 
   handleChange(field, e) {
-    const post = Object.assign({}, this.state.post, {[field]: e.target.value});
-    this.setState(Object.assign({}, this.state, {post}));
+    const comment = Object.assign({}, this.state.comment, {[field]: e.target.value});
+    this.setState(Object.assign({}, this.state, {comment}));
   }
 
   handleSubmit() {
-    this.context.store.dispatch(postsActions.createPost(this.state.post));
-    browserHistory.push('/');
+    this.context.store.dispatch(commentsActions.createComment(this.state));
+    browserHistory.push(`/posts/${this.state.postId}/comment`);
   }
 
   render() {
-    let {title, author, category, body} = this.state.post
-
-    let categories
-    if(this.props.categories){
-      categories = this.props.categories
-    }
+    let { author, body } = this.state.comment
 
     return (
       <form onSubmit={ this.handleSubmit.bind(this) } noValidate>
-        <div className="form-group">
-          <label className="label-control">Title</label>
-          <input
-            type="text"
-            className="form-control"
-            value={ title }
-            onChange={ this.handleChange.bind(this, 'title') } />
-        </div>
-
         <div className="form-group">
           <label className="label-control">Autor</label>
           <input
@@ -85,27 +56,13 @@ export class PostsNew extends React.Component {
         </div>
 
         <div className="form-group">
-          <label className="label-control">Category&nbsp;&nbsp;</label>
-          <select className="selectpicker" 
-                  data-style="btn-info" 
-                  id="selCategory" 
-                  onChange={ this.handleChange.bind(this, 'category') } >
-            { categories && Object.keys(categories).map( (key) =>
-                <option key={ categories[key].id.toString() } value={ categories[key].name }>{ categories[key].path }</option>
-              )
-            }
-          </select>
-        </div>
-
-        <div className="form-group">
           <label className="label-control">Body</label>
           <Textarea
             className="form-control"
             value={ body }
             onChange={this.handleChange.bind(this, 'body')} />
         </div>
-
-        <button type="submit" className="btn btn-default">Create Post</button>
+        <button type="submit" className="btn btn-default">Create Comment</button>
       </form>
     );
   }

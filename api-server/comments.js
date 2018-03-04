@@ -60,19 +60,20 @@ function add (token, comment) {
   return new Promise((res) => {
     let comments = getData(token)
 
-    comments[comment.id] = {
+    comments.byId[comment.id] = {
       id: comment.id,
       timestamp: comment.timestamp,
       body: comment.body,
       author: comment.author,
       parentId: comment.parentId,
-      voteScore: 1,
-      deleted: false,
-      parentDeleted: false
+      voteScore: comment.voteScore,
+      deleted: comment.deleted,
+      parentDeleted: comment.parentDeleted
     }
 
     posts.incrementCommentCounter(token, comment.parentId, 1)
-    res(comments[comment.id])
+    comments.allIds.push(comment.id)
+    res(comments.byId[comment.id])
   })
 }
 

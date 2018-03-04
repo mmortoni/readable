@@ -286,19 +286,34 @@ app.get('/', (req, res) => {
   })
   
   app.post('/comments', bodyParser.json(), (req, res) => {
-      comments.add(req.token, req.body)
-        .then(
-            (data) => res.send(data),
-            (error) => {
-                console.error(error)
-                res.status(500).send({
-                    error: 'There was an error.'
-                })
-            }
-        )
-  })
+    let id = new objectId()
+    let buffer = id.get().toString('base64')
+    let timestamp = Math.floor(Date.now())
+
+    let comment = {
+        id: buffer.toLowerCase(),
+        parentId: req.body.parentId,
+        timestamp: timestamp,
+        body: req.body.body,
+        author: req.body.author,
+        voteScore: 0,
+        deleted: false,
+        parentDeleted: false
+    }
+    
+    comments.add(req.token, comment)
+    .then(
+        (data) => res.send(data),
+        (error) => {
+            console.error(error)
+            res.status(500).send({
+                error: 'There was an error.'
+            })
+        }
+    )
+})
   
-  app.post('/comments/:id', bodyParser.json(), (req, res) => {
+app.post('/comments/:id', bodyParser.json(), (req, res) => {
       const { option } = req.body
       comments.vote(req.token, req.params.id, option)
         .then(

@@ -1,27 +1,9 @@
 import { keyBy } from 'lodash';
-import axios from 'axios';
 import { Observable } from 'rxjs/Observable';
 import querystring from 'querystring';
 
 import { CATEGORY } from '../../constants/constants'
 import * as categoriesActions from './actionCreators';
-
-let token = localStorage.token;
-
-if (!token)
-token = localStorage.token = Math.random()
-                                .toString(36)
-                                .substr(-8);
-
-const instanceAxios = axios.create({
-  baseURL: process.env.REACT_APP_READABLE_API || 'http://localhost:3030',
-  timeout: 5000,
-  headers: {
-    'Accept': 'application/json',
-    'Authorization': token,
-    'Content-Type': 'application/json'
-  }
-})
 
 export function getCategories(action$) {
   return action$.ofType(CATEGORY.CATEGORY_FETCH_COLLECTION)

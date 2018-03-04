@@ -5,14 +5,32 @@ import { Route, IndexRoute, Router, hashHistory, browserHistory  } from 'react-r
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import store from './store';
-import { PostsIndex, PostsEdit, PostsNew, PostsComment } from './containers/index';
+import axios from 'axios';
+
+import { PostsIndex, PostsEdit, PostsNew, PostsComment, PostsCommentEdit, PostsCommentNew } from './containers/index';
 
 require('./app.scss');
 
 const history = syncHistoryWithStore(browserHistory, store)
 
-let App = ({ children }) => {
+let token = localStorage.token;
 
+if (!token)
+token = localStorage.token = Math.random()
+                                .toString(36)
+                                .substr(-8);
+
+window.instanceAxios = axios.create({
+  baseURL: process.env.REACT_APP_READABLE_API || 'http://localhost:3030',
+  timeout: 5000,
+  headers: {
+    'Accept': 'application/json',
+    'Authorization': token,
+    'Content-Type': 'application/json'
+  }
+})
+
+let App = ({ children }) => {
   return (
     <div>
       <Navbar>
@@ -37,10 +55,12 @@ export default () => {
     <Provider store={store}>
       <Router history={history}>
         <Route path="/" component={ App }>
-          <IndexRoute path="/" component={ PostsIndex } />
+          <IndexRoute component={ PostsIndex } />
           <Route path="/posts/new" component={ PostsNew } />
           <Route path="/posts/:postId/edit" component={ PostsEdit } />
           <Route path="/posts/:postId/comment" component={ PostsComment } />
+          <Route path="/posts/:postId/comment/new" component={ PostsCommentNew } />
+          <Route path="/posts/comment/:commentId/edit" component={ PostsCommentEdit } />
         </Route>
       </Router>
     </Provider>
