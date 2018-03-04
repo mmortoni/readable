@@ -71,7 +71,8 @@ function add (token, comment) {
       parentDeleted: comment.parentDeleted
     }
 
-    posts.incrementCommentCounter(token, comment.parentId, 1)
+    posts.incrementCommentCounter(token, comment.parentId, comment.id)
+
     comments.allIds.push(comment.id)
     res(comments.byId[comment.id])
   })

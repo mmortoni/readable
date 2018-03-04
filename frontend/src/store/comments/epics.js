@@ -17,10 +17,10 @@ export function fetchComment(action$) {
 export function fetchComments(action$) {
   return action$.ofType(COMMENT.COMMENT_FETCH_COLLECTION)
     .map(action => action.payload)
-    .switchMap(payload => {
+    .switchMap(post => {
       return Observable.fromPromise(
-        instanceAxios.get(`/posts/${ payload.commentId }/comments`)
-      ).map(res => commentsActions.fetchCommentsSuccess({comment:payload.comment, comments:res.data}))
+        instanceAxios.get(`/posts/${post.id}/comments`)
+      ).map(res => commentsActions.fetchCommentsSuccess(res.data))
     })
 }
 
@@ -32,10 +32,10 @@ export function sortComments(action$) {
 export function createComment(action$) {
   return action$.ofType(COMMENT.COMMENT_CREATE)
     .map(action => action.payload)
-    .switchMap(comment => {
+    .switchMap(payload => {
       return Observable.merge(
         Observable.fromPromise(
-          instanceAxios.post(`/comments`, { author: comment.author, body: comment.body, parentId: comment.postId })
+          instanceAxios.post(`/comments`, { author: payload.comment.author, body: payload.comment.body, parentId: payload.postId })
         ).map(res => commentsActions.createCommentSuccess(res.data))
       );
     });

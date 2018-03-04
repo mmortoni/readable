@@ -40,6 +40,8 @@ export class PostsIndex extends React.Component {
   }
 
   componentDidMount() {
+    document.getElementById('navItemComments').parentNode.classList.add('disabled')
+
     this.fetchPosts({})
   }
 

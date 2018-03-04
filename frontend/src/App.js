@@ -31,15 +31,15 @@ window.instanceAxios = axios.create({
 })
 
 let App = ({ children }) => {
-  return (
-    <div>
+  return (      
+      <div>
       <Navbar>
         <Nav>
           <IndexLinkContainer to="/">
-            <NavItem>Posts</NavItem>
+            <NavItem >Posts</NavItem>
           </IndexLinkContainer>
           <LinkContainer to="">
-            <NavItem disabled={true}>Comments</NavItem>
+            <NavItem id="navItemComments" disabled={true}>Comments</NavItem>
           </LinkContainer>
         </Nav>
       </Navbar>

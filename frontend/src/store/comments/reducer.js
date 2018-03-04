@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case COMMENT.COMMENT_FETCH_ONE_SUCCESS:
     case COMMENT.COMMENT_FETCH_COLLECTION_SUCCESS:
-      newById = Object.assign({}, _(keyBy(action.payload.comments, (comment) => comment.id))
+      newById = Object.assign({}, _(keyBy(action.payload, (comment) => comment.id))
         .map(function(v, k) {
           return _.merge({}, v, { key: k })
         })
@@ -28,22 +28,20 @@ export default (state = initialState, action) => {
         byId: newById || {}
       })
     case COMMENT.COMMENT_CREATE_SUCCESS:
-      newById =  [ {
+      newById =  [...state.byId,
+                  {
                     id: action.payload.id,
                     timestamp: action.payload.timestamp,
-                    title: action.payload.title,
                     body: action.payload.body,
                     author: action.payload.author,
-                    category: action.payload.category,
-                    comments : action.payload.comments,
+                    parentId: action.payload.parentId,
                     voteScore: action.payload.voteScore,
                     deleted: action.payload.deleted,
-                    commentCount: action.payload.commentCount
-                  },
-                  ...state.byId
+                    parentDeleted: action.payload.parentDeleted
+                  }
                 ]
 
-      newById = _.orderBy(newById, state.sort.sortKey, state.sort.sortOrder)
+      //newById = _.orderBy(newById, state.sort.sortKey, state.sort.sortOrder)
 
       return state.merge({
         sort: state.sort || {},

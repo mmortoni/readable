@@ -171,11 +171,11 @@ function edit (token, id, postObject) {
     })
 }
 
-function incrementCommentCounter(token, id, count) {
+function incrementCommentCounter(token, idPost, idComment) {
   const posts = getData(token)
 
-  if (posts.byId[id]) {
-    posts.byId[id].comments.push(id)
+  if (posts.byId[idPost]) {
+    posts.byId[idPost].comments.push(idComment)
   }
 }
 

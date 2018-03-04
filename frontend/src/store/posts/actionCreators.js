@@ -5,8 +5,9 @@ export function fetchPost(payload) {
 }
 
 export function fetchPostSuccess(payload) {
-  const byId = {[payload.id]: payload};
-  return {type: POST.POST_FETCH_ONE_SUCCESS, payload: {byId}};
+  //const byId = {[payload.id]: payload};
+//  return {type: POST.POST_FETCH_ONE_SUCCESS, payload: {byId}};
+  return {type: POST.POST_FETCH_ONE_SUCCESS, payload};
 }
 
 export function fetchPosts(payload) {

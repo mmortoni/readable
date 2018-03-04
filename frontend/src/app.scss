@@ -55,6 +55,20 @@ a.btn {
     justify-content: flex-start;
   }
   
+  /*
+  .comment {
+    height: 150px;
+    display: flex;
+    -ms-align-items: center;
+    align-items: center;
+    position: relative;
+    margin: 0 100px 10px 100px;
+    padding: 5px;
+    transition: all 1s ease;
+    justify-content: center;
+  }
+  */
+
   .post-description {
     flex: 1 0 auto;
     padding: 0 10px;
@@ -108,18 +122,6 @@ a.btn {
     display: flex;
     flex-direction: row;
     margin-left: 70px;
-  }
-  
-  .comment {
-    height: 150px;
-    display: flex;
-    -ms-align-items: center;
-    align-items: center;
-    position: relative;
-    margin: 0 100px 10px 100px;
-    padding: 5px;
-    transition: all 1s ease;
-    justify-content: center;
   }
   
   .create-post-details {

@@ -34,11 +34,12 @@ export class PostsComment extends React.Component {
   };
 
   constructor(props, context) {
-    super(props, context);
+    super(props, context)
+    document.getElementById('navItemComments').parentNode.classList.remove('disabled')
   }
 
   componentDidMount() {
-    this.context.store.dispatch(commentsActions.fetchComments({post:this.props.post, postId: this.props.params.postId}))
+    this.context.store.dispatch( commentsActions.fetchComments(this.props.post) )
   }
 
   deleteComment(item, buttonValue){
@@ -82,7 +83,7 @@ export class PostsComment extends React.Component {
                   <img src="/images/thumbs-down.png" width="28" height="28" onClick={ this.votePost.bind(this, post.id, "downVote") } />
                 </div>
                 <div className="post-likes-comments">
-                  { post.voteScore } votes { post.comments && post.comments.length > 0 ? post.comments.length : 0 } comments
+                  { post.voteScore } votes { comments && comments.length > 0 ? comments.length : 0 } comments
                 </div>
               </div>
 
