@@ -40,8 +40,16 @@ function getData (token) {
 function getByParent (token, parentId) {
   return new Promise((res) => {
     let comments = getData(token)
-    let filtered_keys = Object.keys(comments['byId']).filter(key => comments['byId'][key].parentId === parentId && !comments['byId'][key].deleted)
-    res(filtered_keys.map(key => comments['byId'][key]))
+    let result  = [];
+
+    result.push( Object.keys(comments['byId'])
+      .filter(keyF => comments['byId'][keyF].parentId === parentId && !comments['byId'][keyF].deleted)
+      .map(keyM => comments['byId'][keyM])
+    )
+
+   result.push(result[0].map(comment => comment.id))
+
+    res( result )
   })
 }
 
