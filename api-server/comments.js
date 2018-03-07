@@ -89,7 +89,7 @@ function add (token, comment) {
 function vote (token, id, option) {
   return new Promise((res) => {
     let comments = getData(token)
-    comment = comments[id]
+    comment = comments.byId[id]
     switch(option) {
         case "upVote":
             comment.voteScore = comment.voteScore + 1
@@ -117,9 +117,9 @@ function disableByParent (token, post) {
 function disable (token, id) {
     return new Promise((res) => {
       let comments = getData(token)
-      comments[id].deleted = true
-      posts.incrementCommentCounter(token, comments[id].parentId, id, 'disable')
-      res(comments[id])
+      comments.byId[id].deleted = true
+      posts.incrementCommentCounter(token, comments.byId[id].parentId, id, 'disable')
+      res(comments.byId[id])
     })
 }
 
