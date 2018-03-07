@@ -55,8 +55,7 @@ export default (state = initialState, action) => {
           : comment
       )
 
-      if(state.sort.sortKey === 'title')
-        newById = _.orderBy(newById, state.sort.sortKey, state.sort.sortOrder)
+      newById = _.orderBy(newById, state.sort.sortKey, state.sort.sortOrder)
 
       return state.merge({
         sort: state.sort || {},

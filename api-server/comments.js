@@ -79,7 +79,7 @@ function add (token, comment) {
       parentDeleted: comment.parentDeleted
     }
 
-    posts.incrementCommentCounter(token, comment.parentId, comment.id)
+    posts.incrementCommentCounter(token, comment.parentId, comment.id, 'add')
 
     comments.allIds.push(comment.id)
     res(comments.byId[comment.id])
@@ -118,19 +118,21 @@ function disable (token, id) {
     return new Promise((res) => {
       let comments = getData(token)
       comments[id].deleted = true
-      posts.incrementCommentCounter(token, comments[id].parentId, -1)
+      posts.incrementCommentCounter(token, comments[id].parentId, id, 'disable')
       res(comments[id])
     })
 }
 
-function edit (token, id, comment) {
+function edit (token, id, commentObject) {
     return new Promise((res) => {
         let comments = getData(token)
+        let comment = comments.byId[id]
+        
         let prop
-        for (prop in comment) {
-            comments[id][prop] = comment[prop]
+        for (prop in commentObject) {
+            comment[prop] = commentObject[prop]
         }
-        res(comments[id])
+        res(comment)
     })
 }
 

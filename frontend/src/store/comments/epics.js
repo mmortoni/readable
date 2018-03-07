@@ -48,7 +48,7 @@ export function updateComment(action$) {
       return Observable.merge(
         Observable.fromPromise(
           instanceAxios.put(`/comments/${ comment.id }`, {author: comment.author, body: comment.body})
-        ).map(res => commentsActions.updatecommentsuccess(res.data))
+        ).map(res => commentsActions.updateCommentSuccess(res.data))
       );
     });
 }
@@ -59,7 +59,7 @@ export function deleteComment(action$) {
     .switchMap(comment => {
       return Observable.fromPromise(
         instanceAxios.delete(`/comments/${comment.id}`)
-      ).map(res => commentsActions.deletecommentsuccess(comment));
+      ).map(res => commentsActions.deleteCommentSuccess(comment));
     });
 }
 
@@ -70,7 +70,7 @@ export function voteComment(action$) {
         return Observable.merge(
         Observable.fromPromise(
           instanceAxios.post(`/comments/${ payload.id }`, {option: payload.option})
-        ).map(res => commentsActions.votecommentsuccess(res.data))
+        ).map(res => commentsActions.voteCommentSuccess(res.data))
       );
     });
 }

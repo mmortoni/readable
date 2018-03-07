@@ -171,11 +171,15 @@ function edit (token, id, postObject) {
     })
 }
 
-function incrementCommentCounter(token, idPost, idComment) {
+function incrementCommentCounter(token, idPost, idComment, action) {
   const posts = getData(token)
 
   if (posts.byId[idPost]) {
-    posts.byId[idPost].comments.push(idComment)
+    if(action == 'add') {
+      posts.byId[idPost].comments.push(idComment)
+    } else {
+      posts.byId[idPost].comments =  posts.byId[idPost].comments.filter(item => item !== idComment)
+    }
   }
 }
 

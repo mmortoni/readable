@@ -41,14 +41,14 @@ export class PostsCommentEdit extends React.Component {
   }
   
   handleChange(field, e) {
-    const post = Object.assign({}, this.state.comment, {[field]: e.target.value});
+    const comment = Object.assign({}, this.state.comment, {[field]: e.target.value});
     this.setState(Object.assign({}, this.state, {comment}));
   }
 
   handleSubmit() {
-    if (this.state.postId) {
-      this.context.store.dispatch(commentsActions.updateComment(this.state.post));
-      browserHistory.push('/');
+    if (this.state.commentId) {
+      this.context.store.dispatch(commentsActions.updateComment(this.state.comment));
+      browserHistory.push(`/posts/${this.state.comment.parentId}/comment`);
     }
   }
 

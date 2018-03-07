@@ -36,6 +36,11 @@ export class PostsComment extends React.Component {
   constructor(props, context) {
     super(props, context)
     document.getElementById('navItemComments').parentNode.classList.remove('disabled')
+
+    this.deleteComment = this.deleteComment.bind(this)
+    this.deleteCommentModal = this.deleteCommentModal.bind(this)
+    this.voteComment = this.voteComment.bind(this)
+    this.votePost = this.votePost.bind(this)
   }
 
   componentDidMount() {
@@ -51,7 +56,7 @@ export class PostsComment extends React.Component {
     ModalManager.open(<AppModal
                         title={ 'Delete Comment' }
                         content={ 'Tem certeza de que deseja excluir?' }
-                        detail={ comment.title }
+                        detail={ comment.body }
                         callBackFunction={ this.deleteComment }
                         item={ comment }
                         effect={ EFFECTS['3D ROTATE LEFT'] } />);
