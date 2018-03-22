@@ -42,6 +42,8 @@ node index.js
 
 ![POSTS](public/posts.png?raw=true "CRUD de POSTS")
 
+###### Página Comments
+
 ![COMMENTS](public/comments.png?raw=true "CRUD de COMMENTS")
 
 ###### Routing      
