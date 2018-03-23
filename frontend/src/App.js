@@ -4,7 +4,7 @@ import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap';
 import { Route, IndexRoute, Router, hashHistory, browserHistory  } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
-import store from './store';
+import store from './store/index';
 import axios from 'axios';
 
 import { PostsIndex, PostsEdit, PostsNew, PostsComment, PostsCommentEdit, PostsCommentNew } from './containers/index';
