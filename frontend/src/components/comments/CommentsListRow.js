@@ -3,8 +3,8 @@ import { Link } from 'react-router'
 
 import { formatTimestamp } from '../../utils/Utils'
 
-export const CommentsListRow = ({comment, onDelete, onVoteComment}) => {
-  if(!comment) {
+export const CommentsListRow = ({ comment, onDelete, onVoteComment }) => {
+  if (!comment) {
     return <tr><td><div>404 Comment Not Found!</div></td></tr>
   }
 
@@ -22,11 +22,11 @@ export const CommentsListRow = ({comment, onDelete, onVoteComment}) => {
               {comment.voteScore} votes
             </div>
           </div>
-          <br/>
+          <br />
           <div>
             <div className="post-author"><p><b>Author: </b> {comment.author}</p></div>
             <div className="post-author"><p><b>Time: </b> {formatTimestamp(comment.timestamp)}</p></div>
-          </div>          
+          </div>
         </div>
       </td>
       <td>

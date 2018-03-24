@@ -45,16 +45,16 @@ export const COMMENT = {
 }
 
 export const EFFECTS = {
-    'FADE IN & SCALE' : Effect.ScaleUp,
-    'SLIDE IN (RIGHT)' : Effect.SlideFromRight,
-    'SLIDE IN (BOTTOM)' : Effect.SlideFromBottom,
-    'NEWSPAPER' : Effect.Newspaper,
-    'FALL' : Effect.Fall,
-    'SIDE FALL' : Effect.SideFall,
-    '3D FLIP (HORIZONTAL)' : Effect.FlipHorizontal3D,
-    '3D FLIP (VERTICAL)' : Effect.FlipVertical3D,
-    '3D SIGN' : Effect.Sign3D,
-    'SUPER SCALED' : Effect.SuperScaled,
-    '3D ROTATE BOTTOM' : Effect.RotateFromBottom3D,
-    '3D ROTATE LEFT' : Effect.RotateFromLeft3D
-  }
+    'FADE IN & SCALE': Effect.ScaleUp,
+    'SLIDE IN (RIGHT)': Effect.SlideFromRight,
+    'SLIDE IN (BOTTOM)': Effect.SlideFromBottom,
+    'NEWSPAPER': Effect.Newspaper,
+    'FALL': Effect.Fall,
+    'SIDE FALL': Effect.SideFall,
+    '3D FLIP (HORIZONTAL)': Effect.FlipHorizontal3D,
+    '3D FLIP (VERTICAL)': Effect.FlipVertical3D,
+    '3D SIGN': Effect.Sign3D,
+    'SUPER SCALED': Effect.SuperScaled,
+    '3D ROTATE BOTTOM': Effect.RotateFromBottom3D,
+    '3D ROTATE LEFT': Effect.RotateFromLeft3D
+}

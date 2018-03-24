@@ -37,18 +37,17 @@ export class PostsNew extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // refresh - do usuário ()
-    if(!this.props.categories)
+    if (!this.props.categories)
       //this.context.store.dispatch(categoriesActions.fetchCategories(this.state))
 
-    if (!isEqual(nextProps.post, this.state.post)) {
-      this.setState({...this.state, post: nextProps.post});
-    }
+      if (!isEqual(nextProps.post, this.state.post)) {
+        this.setState({ ...this.state, post: nextProps.post });
+      }
   }
 
   handleChange(field, e) {
-    const post = Object.assign({}, this.state.post, {[field]: e.target.value});
-    this.setState(Object.assign({}, this.state, {post}));
+    const post = Object.assign({}, this.state.post, { [field]: e.target.value });
+    this.setState(Object.assign({}, this.state, { post }));
   }
 
   handleSubmit() {
@@ -57,22 +56,22 @@ export class PostsNew extends React.Component {
   }
 
   render() {
-    let {title, author, category, body} = this.state.post
+    let { title, author, category, body } = this.state.post
 
     let categories
-    if(this.props.categories){
+    if (this.props.categories) {
       categories = this.props.categories
     }
 
     return (
-      <form onSubmit={ this.handleSubmit.bind(this) } noValidate>
+      <form onSubmit={this.handleSubmit.bind(this)} noValidate>
         <div className="form-group">
           <label className="label-control">Title</label>
           <input
             type="text"
             className="form-control"
-            value={ title }
-            onChange={ this.handleChange.bind(this, 'title') } />
+            value={title}
+            onChange={this.handleChange.bind(this, 'title')} />
         </div>
 
         <div className="form-group">
@@ -80,19 +79,19 @@ export class PostsNew extends React.Component {
           <input
             type="text"
             className="form-control"
-            value={ author }
-            onChange={ this.handleChange.bind(this, 'author') } />
+            value={author}
+            onChange={this.handleChange.bind(this, 'author')} />
         </div>
 
         <div className="form-group">
           <label className="label-control">Category&nbsp;&nbsp;</label>
-          <select className="selectpicker" 
-                  data-style="btn-info" 
-                  id="selCategory" 
-                  onChange={ this.handleChange.bind(this, 'category') } >
-            { categories && Object.keys(categories).map( (key) =>
-                <option key={ categories[key].id.toString() } value={ categories[key].name }>{ categories[key].path }</option>
-              )
+          <select className="selectpicker"
+            data-style="btn-info"
+            id="selCategory"
+            onChange={this.handleChange.bind(this, 'category')} >
+            {categories && Object.keys(categories).map((key) =>
+              <option key={categories[key].id.toString()} value={categories[key].name}>{categories[key].path}</option>
+            )
             }
           </select>
         </div>
@@ -101,7 +100,7 @@ export class PostsNew extends React.Component {
           <label className="label-control">Body</label>
           <Textarea
             className="form-control"
-            value={ body }
+            value={body}
             onChange={this.handleChange.bind(this, 'body')} />
         </div>
 

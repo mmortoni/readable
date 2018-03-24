@@ -4,7 +4,7 @@ const posts = require('./posts')
 let db = {}
 
 const defaultData = {
-  byId : {
+  byId: {
     "894tuq4ut84ut8v4t8wun89g": {
       id: '894tuq4ut84ut8v4t8wun89g',
       parentId: "8xf0y6ziyjabvozdd253nd",
@@ -24,49 +24,49 @@ const defaultData = {
       voteScore: -5,
       deleted: false,
       parentDeleted: false
-    }    
+    }
   },
-  allIds : ['894tuq4ut84ut8v4t8wun89g','8tu4bsun805n8un48ve89']
+  allIds: ['894tuq4ut84ut8v4t8wun89g', '8tu4bsun805n8un48ve89']
 }
 
-function getData (token) {
+function getData(token) {
   let data = db[token]
 
   if (data == null) {
     data = db[token] = clone(defaultData)
   }
-  
+
   return data
 }
 
-function getByParent (token, parentId) {
+function getByParent(token, parentId) {
   return new Promise((res) => {
     let comments = getData(token)
-    let result  = [];
+    let result = [];
 
-    result.push( Object.keys(comments['byId'])
+    result.push(Object.keys(comments['byId'])
       .filter(keyF => comments['byId'][keyF].parentId === parentId && !comments['byId'][keyF].deleted)
       .map(keyM => comments['byId'][keyM])
     )
 
-   result.push(result[0].map(comment => comment.id))
+    result.push(result[0].map(comment => comment.id))
 
-    res( result )
+    res(result)
   })
 }
 
-function get (token, id) {
+function get(token, id) {
   return new Promise((res) => {
     const comments = getData(token)
     res(
       comments[id].deleted || comments[id].parentDeleted
         ? {}
         : comments[id]
-      )
+    )
   })
 }
 
-function add (token, comment) {
+function add(token, comment) {
   return new Promise((res) => {
     let comments = getData(token)
 
@@ -88,54 +88,54 @@ function add (token, comment) {
   })
 }
 
-function vote (token, id, option) {
+function vote(token, id, option) {
   return new Promise((res) => {
     let comments = getData(token)
     comment = comments.byId[id]
-    switch(option) {
-        case "upVote":
-            comment.voteScore = comment.voteScore + 1
-            break
-        case "downVote":
-            comment.voteScore = comment.voteScore - 1
-            break
-        default:
-            console.log(`comments.vote received incorrect parameter: ${option}`)
+    switch (option) {
+      case "upVote":
+        comment.voteScore = comment.voteScore + 1
+        break
+      case "downVote":
+        comment.voteScore = comment.voteScore - 1
+        break
+      default:
+        console.log(`comments.vote received incorrect parameter: ${option}`)
     }
     res(comment)
   })
 }
 
-function disableByParent (token, post) {
-    return new Promise((res) => {
-        let comments = getData(token)
-        let keys = Object.keys(comments)
-        let filtered_keys = keys.filter(key => comments[key].parentId === post.id)
-        filtered_keys.forEach(key => comments[key].parentDeleted = true)
-        res(post)
-    })
+function disableByParent(token, post) {
+  return new Promise((res) => {
+    let comments = getData(token)
+    let keys = Object.keys(comments)
+    let filtered_keys = keys.filter(key => comments[key].parentId === post.id)
+    filtered_keys.forEach(key => comments[key].parentDeleted = true)
+    res(post)
+  })
 }
 
-function disable (token, id) {
-    return new Promise((res) => {
-      let comments = getData(token)
-      comments.byId[id].deleted = true
-      posts.incrementCommentCounter(token, comments.byId[id].parentId, id, 'disable')
-      res(comments.byId[id])
-    })
+function disable(token, id) {
+  return new Promise((res) => {
+    let comments = getData(token)
+    comments.byId[id].deleted = true
+    posts.incrementCommentCounter(token, comments.byId[id].parentId, id, 'disable')
+    res(comments.byId[id])
+  })
 }
 
-function edit (token, id, commentObject) {
-    return new Promise((res) => {
-        let comments = getData(token)
-        let comment = comments.byId[id]
-        
-        let prop
-        for (prop in commentObject) {
-            comment[prop] = commentObject[prop]
-        }
-        res(comment)
-    })
+function edit(token, id, commentObject) {
+  return new Promise((res) => {
+    let comments = getData(token)
+    let comment = comments.byId[id]
+
+    let prop
+    for (prop in commentObject) {
+      comment[prop] = commentObject[prop]
+    }
+    res(comment)
+  })
 }
 
 module.exports = {

@@ -1,4 +1,3 @@
-//client.js
 const { exec } = require('child_process');
 const process = require('process');
 

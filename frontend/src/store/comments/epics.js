@@ -9,7 +9,7 @@ export function fetchComment(action$) {
     .map(action => action.payload)
     .switchMap(id => {
       return Observable.fromPromise(
-        instanceAxios.get(`/comments/${ id }`)
+        instanceAxios.get(`/comments/${id}`)
       ).map(res => commentsActions.fetchcommentsuccess(res.data));
     });
 }
@@ -26,7 +26,7 @@ export function fetchComments(action$) {
 
 export function sortComments(action$) {
   return action$.ofType(COMMENT.COMMENT_SORT)
-    .map(action =>  commentsActions.sortSuccess(action.payload));
+    .map(action => commentsActions.sortSuccess(action.payload));
 }
 
 export function createComment(action$) {
@@ -47,7 +47,7 @@ export function updateComment(action$) {
     .switchMap(comment => {
       return Observable.merge(
         Observable.fromPromise(
-          instanceAxios.put(`/comments/${ comment.id }`, {author: comment.author, body: comment.body})
+          instanceAxios.put(`/comments/${comment.id}`, { author: comment.author, body: comment.body })
         ).map(res => commentsActions.updateCommentSuccess(res.data))
       );
     });
@@ -66,10 +66,10 @@ export function deleteComment(action$) {
 export function voteComment(action$) {
   return action$.ofType(COMMENT.COMMENT_VOTE)
     .map(action => action.payload)
-      .switchMap(payload => {
-        return Observable.merge(
+    .switchMap(payload => {
+      return Observable.merge(
         Observable.fromPromise(
-          instanceAxios.post(`/comments/${ payload.id }`, {option: payload.option})
+          instanceAxios.post(`/comments/${payload.id}`, { option: payload.option })
         ).map(res => commentsActions.voteCommentSuccess(res.data))
       );
     });

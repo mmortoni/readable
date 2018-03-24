@@ -4,26 +4,26 @@ const config = require('./config')
 let db = {}
 
 const defaultData = {
-    byId : {
-      "1":{
-        id: 1,
-        name: 'react',
-        path: 'react'
-      },
-      "2":{
-        id: 2,
-        name: 'redux',
-        path: 'redux'
-      },
-      "3":{
-        id: 3,
-        name: 'udacity',
-        path: 'udacity'
-      }
+  byId: {
+    "1": {
+      id: 1,
+      name: 'react',
+      path: 'react'
+    },
+    "2": {
+      id: 2,
+      name: 'redux',
+      path: 'redux'
+    },
+    "3": {
+      id: 3,
+      name: 'udacity',
+      path: 'udacity'
     }
+  }
 }
 
-function getData (token) {
+function getData(token) {
   //Each token has it's own copy of the DB. The token in this case is like an app id.
   let data = db[token]
   //This populates the default user data if there isn't any in the db.
@@ -33,7 +33,7 @@ function getData (token) {
   return data
 }
 
-function getAll (token) {
+function getAll(token) {
   return new Promise((res) => {
     res(getData(token))
   })

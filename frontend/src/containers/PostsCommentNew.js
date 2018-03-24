@@ -27,13 +27,13 @@ export class PostsCommentNew extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!isEqual(nextProps.post, this.state.comment)) {
-      this.setState({...this.state, post: nextProps.post});
+      this.setState({ ...this.state, post: nextProps.post });
     }
   }
 
   handleChange(field, e) {
-    const comment = Object.assign({}, this.state.comment, {[field]: e.target.value});
-    this.setState(Object.assign({}, this.state, {comment}));
+    const comment = Object.assign({}, this.state.comment, { [field]: e.target.value });
+    this.setState(Object.assign({}, this.state, { comment }));
   }
 
   handleSubmit() {
@@ -45,21 +45,21 @@ export class PostsCommentNew extends React.Component {
     let { author, body } = this.state.comment
 
     return (
-      <form onSubmit={ this.handleSubmit.bind(this) } noValidate>
+      <form onSubmit={this.handleSubmit.bind(this)} noValidate>
         <div className="form-group">
           <label className="label-control">Autor</label>
           <input
             type="text"
             className="form-control"
-            value={ author }
-            onChange={ this.handleChange.bind(this, 'author') } />
+            value={author}
+            onChange={this.handleChange.bind(this, 'author')} />
         </div>
 
         <div className="form-group">
           <label className="label-control">Body</label>
           <Textarea
             className="form-control"
-            value={ body }
+            value={body}
             onChange={this.handleChange.bind(this, 'body')} />
         </div>
         <button type="submit" className="btn btn-default">Create Comment</button>

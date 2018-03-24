@@ -36,13 +36,13 @@ export class PostsEdit extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!isEqual(nextProps.post, this.state.post)) {
-      this.setState({...this.state, post: nextProps.post});
+      this.setState({ ...this.state, post: nextProps.post });
     }
   }
-  
+
   handleChange(field, e) {
-    const post = Object.assign({}, this.state.post, {[field]: e.target.value});
-    this.setState(Object.assign({}, this.state, {post}));
+    const post = Object.assign({}, this.state.post, { [field]: e.target.value });
+    this.setState(Object.assign({}, this.state, { post }));
   }
 
   handleSubmit() {
@@ -56,21 +56,21 @@ export class PostsEdit extends React.Component {
     let { title, body } = this.state.post
 
     return (
-      <form onSubmit={ this.handleSubmit.bind(this) } noValidate>
+      <form onSubmit={this.handleSubmit.bind(this)} noValidate>
         <div className="form-group">
           <label className="label-control">Title</label>
           <input
             type="text"
             className="form-control"
-            value={ title }
-            onChange={ this.handleChange.bind(this, 'title') } />
+            value={title}
+            onChange={this.handleChange.bind(this, 'title')} />
         </div>
 
         <div className="form-group">
           <label className="label-control">Body</label>
           <Textarea
             className="form-control"
-            value={ body }
+            value={body}
             onChange={this.handleChange.bind(this, 'body')} />
         </div>
 

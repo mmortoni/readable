@@ -5,8 +5,8 @@ import ThumbsUp from '../../images/thumbs-up.png'
 import ThumbsDown from '../../images/thumbs-down.png'
 import { formatTimestamp } from '../../utils/Utils'
 
-export const PostsListRow = ({post, onDelete, onVotePost}) => {
-  if(!post) {
+export const PostsListRow = ({ post, onDelete, onVotePost }) => {
+  if (!post) {
     return <tr><td><div>404 Post Not Found!</div></td></tr>
   }
 
@@ -27,12 +27,12 @@ export const PostsListRow = ({post, onDelete, onVotePost}) => {
               {post.voteScore} votes {post.comments && post.comments.length > 0 ? post.comments.length : 0} comments
             </div>
           </div>
-          <br/>
+          <br />
           <div>
             <div className="post-author"><p><b>Category: </b> {post.category}</p></div>
             <div className="post-author"><p><b>Author: </b> {post.author}</p></div>
             <div className="post-author"><p><b>Time: </b> {formatTimestamp(post.timestamp)}</p></div>
-          </div>          
+          </div>
         </div>
       </td>
       <td>

@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { Modal,ModalManager,Effect } from 'react-dynamic-modal'
+import { Modal, ModalManager, Effect } from 'react-dynamic-modal'
 import { CommentsList } from '../components/comments/CommentsList'
 import { postsActions, postsSelectors } from '../store/posts/index'
 import { commentsActions, commentsSelectors } from '../store/comments/index'
@@ -44,35 +44,35 @@ export class PostsComment extends React.Component {
   }
 
   componentDidMount() {
-    this.context.store.dispatch( commentsActions.fetchComments(this.props.post) )
+    this.context.store.dispatch(commentsActions.fetchComments(this.props.post))
   }
 
-  deleteComment(item, buttonValue){
-    if(buttonValue === 'ok')
+  deleteComment(item, buttonValue) {
+    if (buttonValue === 'ok')
       this.context.store.dispatch(commentsActions.deleteComment(item))
   }
 
   deleteCommentModal(comment) {
     ModalManager.open(<AppModal
-                        title={ 'Delete Comment' }
-                        content={ 'Tem certeza de que deseja excluir?' }
-                        detail={ comment.body }
-                        callBackFunction={ this.deleteComment }
-                        item={ comment }
-                        effect={ EFFECTS['3D ROTATE LEFT'] } />);
+      title={'Delete Comment'}
+      content={'Tem certeza de que deseja excluir?'}
+      detail={comment.body}
+      callBackFunction={this.deleteComment}
+      item={comment}
+      effect={EFFECTS['3D ROTATE LEFT']} />);
   }
 
-  voteComment(id, option){
-    this.context.store.dispatch(commentsActions.voteComment({id: id, option: option}))
+  voteComment(id, option) {
+    this.context.store.dispatch(commentsActions.voteComment({ id: id, option: option }))
   }
 
   votePost(id, option) {
-    this.context.store.dispatch(postsActions.votePost({id: id, option: option}))
+    this.context.store.dispatch(postsActions.votePost({ id: id, option: option }))
   }
 
   render() {
-    const {comments, post} = this.props
-  
+    const { comments, post } = this.props
+
     return (
       <div>
         <div className="row">
@@ -82,31 +82,31 @@ export class PostsComment extends React.Component {
             <div className="post">
               <div className="post-description">
                 <div className="post-title"><h3>{post.title}</h3></div>
-                <div className="post-body"><p>{ post.body }</p></div>
+                <div className="post-body"><p>{post.body}</p></div>
                 <div className="post-likes">
-                  <img src="/images/thumbs-up.png" width="28" height="28" onClick={ this.votePost.bind(this, post.id, "upVote") } />
-                  <img src="/images/thumbs-down.png" width="28" height="28" onClick={ this.votePost.bind(this, post.id, "downVote") } />
+                  <img src="/images/thumbs-up.png" width="28" height="28" onClick={this.votePost.bind(this, post.id, "upVote")} />
+                  <img src="/images/thumbs-down.png" width="28" height="28" onClick={this.votePost.bind(this, post.id, "downVote")} />
                 </div>
                 <div className="post-likes-comments">
-                  { post.voteScore } votes { comments && comments.length > 0 ? comments.length : 0 } comments
+                  {post.voteScore} votes {comments && comments.length > 0 ? comments.length : 0} comments
                 </div>
               </div>
 
-              <br/>
+              <br />
 
               <div>
-                <div className="post-author"><p><b>Category: </b> { post.category }</p></div>
-                <div className="post-author"><p><b>Author: </b> { post.author }</p></div>
-                <div className="post-author"><p><b>Time: </b> { formatTimestamp(post.timestamp) }</p></div>
-              </div>          
+                <div className="post-author"><p><b>Category: </b> {post.category}</p></div>
+                <div className="post-author"><p><b>Author: </b> {post.author}</p></div>
+                <div className="post-author"><p><b>Time: </b> {formatTimestamp(post.timestamp)}</p></div>
+              </div>
             </div>
 
-            {comments.length > 0 && <CommentsList comments={comments} onDelete={this.deleteCommentModal} onVoteComment={this.voteComment}/>}            
+            {comments.length > 0 && <CommentsList comments={comments} onDelete={this.deleteCommentModal} onVoteComment={this.voteComment} />}
           </div>
 
           <div className="col-md-2 text-right">
             <Link to={`/posts/${post.id}/comment/new`} className="btn btn-primary a-btn-slide-text">
-              <span style={{class: this.classNames}} aria-hidden="true"></span>
+              <span style={{ class: this.classNames }} aria-hidden="true"></span>
               <span><strong>Novo Comment</strong></span>
             </Link>
           </div>

@@ -5,9 +5,9 @@ const api = process.env.REACT_APP_READABLE_API || "https://localhost:3030";
 let token = localStorage.token;
 
 if (!token)
-token = localStorage.token = Math.random()
-.toString(36)
-.substr(-8);
+    token = localStorage.token = Math.random()
+        .toString(36)
+        .substr(-8);
 
 const headers = {
     Accept: "application/json",
@@ -54,7 +54,6 @@ export const addComment = comment =>
     fetch(`${api}/comments`, {
         method: "POST",
         headers,
-        // body: JSON.stringify(comment)
         body: JSON.stringify(comment)
     })
         .then(res => res.json())

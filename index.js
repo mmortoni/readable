@@ -1,4 +1,3 @@
-// index.js
 const { spawn } = require('child_process');
 
 function loadProcess() {

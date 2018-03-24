@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 import rootEpic from './epics';
 
-const logger = createLogger({collapsed: true});
+const logger = createLogger({ collapsed: true });
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
 

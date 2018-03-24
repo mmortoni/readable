@@ -4,6 +4,6 @@ const Footer = () => (
     <p>
         Copirraite (&copy;) 2018
     </p>
-  )
-  
-  export default Footer
+)
+
+export default Footer
