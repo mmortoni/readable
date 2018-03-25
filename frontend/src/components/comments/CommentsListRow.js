@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router'
-
+import PropTypes from 'prop-types'
 import { formatTimestamp } from '../../utils/Utils'
 
-export const CommentsListRow = ({ comment, onDelete, onVoteComment }) => {
+const CommentsListRow = ({ comment, onDelete, onVoteComment }) => {
   if (!comment) {
     return <tr><td><div>404 Comment Not Found!</div></td></tr>
   }
@@ -43,4 +43,12 @@ export const CommentsListRow = ({ comment, onDelete, onVoteComment }) => {
       </td>
     </tr>
   )
-};
+}
+
+CommentsListRow.prototype = {
+  comment: PropTypes.object,
+  onDelete: PropTypes.func.isRequired,
+  onVoteComment: PropTypes.func.isRequired
+}
+
+export { CommentsListRow }

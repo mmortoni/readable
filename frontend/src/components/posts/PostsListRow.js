@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router'
-
+import PropTypes from 'prop-types'
 import ThumbsUp from '../../images/thumbs-up.png'
 import ThumbsDown from '../../images/thumbs-down.png'
 import { formatTimestamp } from '../../utils/Utils'
 
-export const PostsListRow = ({ post, onDelete, onVotePost }) => {
+const PostsListRow = ({ post, onDelete, onVotePost }) => {
   if (!post) {
     return <tr><td><div>404 Post Not Found!</div></td></tr>
   }
@@ -49,4 +49,12 @@ export const PostsListRow = ({ post, onDelete, onVotePost }) => {
       </td>
     </tr>
   )
-};
+}
+
+PostsListRow.prototype = {
+  post: PropTypes.object,
+  onDelete: PropTypes.func.isRequired,
+  onVotePost: PropTypes.func.isRequired
+}
+
+export { PostsListRow }

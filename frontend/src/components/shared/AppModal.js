@@ -1,5 +1,6 @@
-import React from 'react';
-import { Modal, ModalManager, Effect } from 'react-dynamic-modal';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Modal, ModalManager, Effect } from 'react-dynamic-modal'
 
 const AppModal = props => {
   const { title, content, detail, callBackFunction, item, effect } = props
@@ -27,5 +28,15 @@ const AppModal = props => {
     </Modal>
   )
 }
+
+AppModal.prototype = {
+  title: PropTypes.string.isRequired, 
+  content: PropTypes.string.isRequired, 
+  detail: PropTypes.string.isRequired, 
+  callBackFunction: PropTypes.func, 
+  item: PropTypes.string.isRequired, 
+  effect: PropTypes.string.isRequired
+}
+
 
 export default AppModal

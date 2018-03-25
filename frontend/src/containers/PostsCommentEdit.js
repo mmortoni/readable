@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router';
 import Textarea from 'react-textarea-autosize';
 import { commentsActions, commentsSelectors } from '../store/comments/index';
@@ -15,13 +16,13 @@ import { isEqual } from 'lodash';
 
 export class PostsCommentEdit extends React.Component {
   static contextTypes = {
-    router: React.PropTypes.object,
-    store: React.PropTypes.object
+    router: PropTypes.object,
+    store: PropTypes.object
   };
 
   static propTypes = {
-    params: React.PropTypes.object,
-    post: React.PropTypes.object,
+    params: PropTypes.object,
+    post: PropTypes.object,
   };
 
   constructor(props, context) {

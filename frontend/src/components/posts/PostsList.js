@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types'
+
 import { PostsListRow } from './PostsListRow';
 
-export const PostsList = ({ posts, onDelete, onVotePost }) => {
+const PostsList = ({ posts, onDelete, onVotePost }) => {
   return (
     <table className="table table-hover">
       <thead>
@@ -14,4 +16,12 @@ export const PostsList = ({ posts, onDelete, onVotePost }) => {
       </tbody>
     </table>
   )
-};
+}
+
+PostsList.prototype = {
+  posts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onVotePost: PropTypes.func.isRequired
+}
+
+export { PostsList }

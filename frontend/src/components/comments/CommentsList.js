@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import { CommentsListRow } from './CommentsListRow';
 
-export const CommentsList = ({ comments, onDelete, onVoteComment }) => {
+const CommentsList = ({ comments, onDelete, onVoteComment }) => {
   return (
     <table className="table table-hover">
       <thead>
@@ -15,3 +16,11 @@ export const CommentsList = ({ comments, onDelete, onVoteComment }) => {
     </table>
   )
 };
+
+CommentsList.prototype = {
+  comments: PropTypes.arrayOf(PropTypes.object),
+  onDelete: PropTypes.func.isRequired,
+  onVoteComment: PropTypes.func.isRequired
+}
+
+export { CommentsList }

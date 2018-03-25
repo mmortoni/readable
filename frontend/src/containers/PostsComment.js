@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -24,13 +25,13 @@ import { formatTimestamp } from '../utils/Utils'
 
 export class PostsComment extends React.Component {
   static contextTypes = {
-    router: React.PropTypes.object,
-    store: React.PropTypes.object,
+    router: PropTypes.object,
+    store: PropTypes.object,
   };
 
   static propTypes = {
-    params: React.PropTypes.object,
-    post: React.PropTypes.object,
+    params: PropTypes.object,
+    post: PropTypes.object,
   };
 
   constructor(props, context) {

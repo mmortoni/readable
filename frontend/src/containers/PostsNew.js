@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router';
 import Textarea from 'react-textarea-autosize';
 import { postsActions, postsSelectors } from '../store/posts/index';
@@ -17,13 +18,13 @@ import { categoriesActions, categoriesSelectors } from '../store/categories/inde
 
 export class PostsNew extends React.Component {
   static contextTypes = {
-    router: React.PropTypes.object,
-    store: React.PropTypes.object
+    router: PropTypes.object,
+    store: PropTypes.object
   };
 
   static propTypes = {
-    params: React.PropTypes.object,
-    post: React.PropTypes.object,
+    params: PropTypes.object,
+    post: PropTypes.object,
   };
 
   constructor(props, context) {
