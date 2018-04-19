@@ -36,6 +36,9 @@ node index.js
 
 ##### Abrir  http://localhost:3001/
 
+### Testes
+O aplicativo tem um conjunto de testes escrito em Jest & Enzyme, que pode ser executado na pasta `Leitura\api-server` com ```yarn test``` ou ```npm test```. 
+
 ##### Funcionalidades:
 
 ###### Página Principal
